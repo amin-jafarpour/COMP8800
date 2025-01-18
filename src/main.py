@@ -27,17 +27,16 @@ def get_cidr(network_adapter='wlp164s0'):
 
 
 
-
-
-
-
 def arp_scan(cidr):
+    bindings_IP_MAC = {}
     answered, unanswered = arping(cidr)
     for sent, received in answered:
-        print(f"IP: {received.psrc}  MAC: {received.hwsrc}")
+        bindings_IP_MAC[received.hwsrc] = received.psrc
+
+    return bindings_IP_MAC
 
 
 
 
 
-arp_scan(get_cidr())
+print(arp_scan(get_cidr()))
