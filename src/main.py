@@ -3,6 +3,12 @@ import subprocess
 
 
 
+"""
+    Dependencies:
+    scapy, ifconfig, iwconfig
+
+"""
+
 
 def get_cidr(network_adapter='wlp164s0'):
     #ip addr show wlp164s0  | grep -oP 'inet \K[\d.]+/\d+'
@@ -19,10 +25,10 @@ def get_cidr(network_adapter='wlp164s0'):
         if grep_result.returncode == 0:
             return grep_result.stdout.strip()
         else:
-            print(f"Grep Error: {grep_result.stderr}")
+            print(f"get_cidr(): Grep Error: {grep_result.stderr}")
             return None
     else:
-        print(f"IP Command Error: {ip_result.stderr}")
+        print(f"get_cidr(): IP Command Error: {ip_result.stderr}")
         return None
 
 
@@ -37,4 +43,25 @@ def arp_scan(cidr):
 
 
 
-print(arp_scan(get_cidr()))
+
+
+def monitor_mode(network_adapter='wlp164s0', channel='6'):
+    commands = [
+        ['sudo', 'ifconfig', network_adapter, 'down'],
+        ['sudo', 'iwconfig', network_adapter, 'mode', 'monitor'],
+        ['sudo', 'ifconfig', network_adapter, 'up'],
+        ['sudo', 'iwconfig', network_adapter, 'channel', channel]
+    ]
+
+    try:
+        for command in commands:
+            result = subprocess.run(command, check=True, text=True, capture_output=True)
+            print(f"Command: {' '.join(command)}\nOutput: {result.stdout}\nError: {result.stderr}")
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred while running: {' '.join(e.cmd)}")
+        print(f"Return code: {e.returncode}")
+        print(f"Error output: {e.stderr}")
+
+
+
+monitor_mode()
