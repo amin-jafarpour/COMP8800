@@ -3,10 +3,26 @@ import subprocess
 
 
 
-"""
-    Dependencies:
-    scapy, ifconfig, iwconfig
+# ip link show | awk -F': ' '/^[0-9]+: / {print $2}'  ||   awk '{print $1}'
 
+
+
+
+"""
+    sudo ifconfig wlan0 down
+    sudo iwconfig wlan0 mode monitor
+    sudo ifconfig wlan0 up
+    iwconfig | grep mode
+    -----------------------------------
+    sudo apt-get install aircrack-ng net-tools
+    sudo airmon-ng check kill
+    sudo airmon-ng start wlan0
+
+
+    sudo ifconfig wlan0mon down
+    sudo iwconfig wlan0mon mode managed
+    sudo ifconfig wlan0mon up
+    sudo systemctl restart NetworkManager
 """
 
 
@@ -64,4 +80,19 @@ def monitor_mode(network_adapter='wlp164s0', channel='6'):
 
 
 
-monitor_mode()
+
+
+def wifi_sniff(network_interface='wlp164s0'):
+    pkt = sniff(iface="wlan0")
+    if pkt.haslayer(Dot11):
+        # Check for beacon or probe response
+        if pkt.type == 0 and pkt.subtype == 8:
+            ssid = pkt.info.decode('utf-8', 'ignore') if pkt.info else 'hidden'
+            bssid = pkt.addr2
+            print(f"Found SSID: {ssid}  BSSID: {bssid}")
+
+
+
+
+
+
