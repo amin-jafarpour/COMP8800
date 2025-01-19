@@ -1,14 +1,14 @@
 from scapy.all import *
 import subprocess
 
-
-
-# ip link show | awk -F': ' '/^[0-9]+: / {print $2}'  ||   awk '{print $1}'
-
-
-
-
 """
+
+    wpa_supplicant
+
+    ip link show | awk -F': ' '/^[0-9]+: / {print $2}'  ||   awk '{print $1}'
+
+
+
     sudo ifconfig wlan0 down
     sudo iwconfig wlan0 mode monitor
     sudo ifconfig wlan0 up
@@ -20,7 +20,7 @@ import subprocess
 
 
     sudo ifconfig wlan0mon down
-    sudo iwconfig wlan0mon mode managed
+    sudo iwconfig wlan0mon mode managed/station
     sudo ifconfig wlan0mon up
     sudo systemctl restart NetworkManager
 """
