@@ -93,6 +93,37 @@ def wifi_sniff(network_interface='wlp164s0'):
 
 
 
+def syn_scan(target_ip, port_list):
+    print(f"Scanning {target_ip} on ports {port_list}")
+    for port in port_list:
+        ip_layer = IP(dst=target_ip)
+        tcp_layer = TCP(dport=port, flags='S') # SYN flag
+        response = sr1(ip_layer / tcp_layer, timeout=0.5, verbose=0)
+
+        if response:
+            if response.haslayer(TCP):
+                if response.getlayer(TCP).flags == 0x12: # 0x12 indicates SYN+ACK
+                    print(f"Port {port} is open.")
+                    rst_packet = ip_layer / TCP(dport=port, flags='R') # RST flag
+                    sr1(rst_packet, timeout=0.5, verbose=0)
+                elif response.getlayer(TCP).flags == 0x14:
+                    print(f"Port {port} is closed.")   # 0x14 indicates RST+ACK
+                else:
+                    print(f"Port {port} is filtered Flags = {response.getlayer(TCP).flags}.")
+            else:
+                print(f"Port {port} is filtered. No TCP layer in response.")
+        else:
+            print(f"Port {port} is filtered. No response.")
 
 
+
+
+
+
+
+
+
+conf.verb = 0  # Disable verbose output of Scapy
+
+syn_scan('18.239.199.38', ['80','135', '433', '445'])
 
