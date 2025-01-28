@@ -1,38 +1,32 @@
-#!/usr/bin/env python3
-
 from scapy.all import sniff, Dot11, Dot11Beacon, Dot11ProbeResp, Dot11Elt
+import time
 
-# A global list to store discovered networks
-discovered_networks = []
 
 
 def packet_handler(pkt):
+
     """
-    Callback function that is invoked for each captured packet.
-    Checks for 802.11 Beacon or Probe Response frames,
-    extracts SSID, BSSID, channel, and encryption details,
-    and prints them if they're new.
     """
+    discovered_networks = []
+    # check if Beacon Frame or Prob Response Frame
     if pkt.haslayer(Dot11Beacon) or pkt.haslayer(Dot11ProbeResp):
         # Extract the MAC address of the AP (BSSID)
-        bssid = pkt[Dot11].addr2
 
-        # Extract the network name (SSID)
+        bssid = pkt[Dot11].addr2
         ssid = None
         # Dot11Elt with ID=0 indicates SSID
         ssid_elt = pkt[Dot11Elt:][0]
         if ssid_elt.ID == 0:
             ssid = ssid_elt.info.decode(errors="ignore").strip()
 
-        # If it’s an SSID broadcast (sometimes hidden), handle gracefully
+        # If it’s an SSID broadcast (sometimes hidden)
         if not ssid:
             ssid = "<Hidden>"
 
-        # Get channel and encryption info if available
-        # Note: In some Scapy versions, Dot11Beacon has .network_stats() to parse AP info
         stats = pkt[Dot11Beacon].network_stats() if pkt.haslayer(Dot11Beacon) else {}
         channel = stats.get("channel", "N/A")
         crypto = stats.get("crypto", "N/A")
+        rssi = pkt.dBm_AntSignal if hasattr(pkt, 'dBm_AntSignal') else "N/A"
 
         # Check if we already discovered this BSSID
         existing_bssids = [net["bssid"] for net in discovered_networks]
@@ -41,7 +35,8 @@ def packet_handler(pkt):
                 "ssid": ssid,
                 "bssid": bssid,
                 "channel": channel,
-                "encryption": crypto
+                "encryption": crypto,
+                "rssi": rssi
             })
 
             print(f"[+] New AP found:")
@@ -49,15 +44,18 @@ def packet_handler(pkt):
             print(f"    BSSID     : {bssid}")
             print(f"    Channel   : {channel}")
             print(f"    Encryption: {crypto}")
+            print(f"    RSSI: {rssi}")
             print()
+            time.sleep(0.5)
+
+
 
 
 def main():
     """
-    Main entry point of the script.
     You must specify an interface in monitor mode (e.g. wlan0mon).
     """
-    interface = "wlan0mon"  # Modify this to match the name of your monitor-mode interface
+    interface = "wlan0mon"
     print(f"[*] Starting sniff on {interface}...")
     sniff(iface=interface, prn=packet_handler, store=False)
 
