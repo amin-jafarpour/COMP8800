@@ -4,6 +4,7 @@ import time
 
 
 def process_packet(pkt, discovered_networks):
+   print(type(pkt))
    if not (pkt.haslayer(Dot11Beacon)): # or pkt.haslayer(Dot11ProbeResp)
       return
    bssid = pkt[Dot11].addr2
