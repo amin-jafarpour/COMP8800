@@ -4,7 +4,7 @@ import time
 
 
 def process_packet(pkt, discovered_networks):
-   if not (pkt.haslayer(Dot11Beacon) or pkt.haslayer(Dot11ProbeResp)):
+   if not (pkt.haslayer(Dot11Beacon)): # or pkt.haslayer(Dot11ProbeResp)
       return
    bssid = pkt[Dot11].addr2
    if bssid in discovered_networks:
@@ -37,5 +37,5 @@ def discover_networks(iface, count):
 
 
 
-print(discover_networks('wlan0mon', 20))
+print(discover_networks('wlan0mon', 2))
 
