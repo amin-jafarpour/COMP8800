@@ -5,6 +5,7 @@ import time
 
 def discover_networks(iface, count, interval=0.2):
     """
+    Assume the interface is already in the monitor mode
     """
     discovered_networks = {}
     while len(discovered_networks) <= count:
@@ -33,17 +34,4 @@ def discover_networks(iface, count, interval=0.2):
 
 
 
-
-
-def main():
-    """
-    You must specify an interface in monitor mode (e.g. wlan0mon).
-    """
-    interface = "wlan0mon"
-    print(f"[*] Starting sniff on {interface}...")
-
-
-
-if __name__ == "__main__":
-    main()
 
