@@ -27,6 +27,7 @@ def discover_networks(iface, count):
     discovered_networks = {}
 
     while (len(discovered_networks) <= count):
+        print(discovered_networks)
         sniff(iface=iface, store=False, count=1, prn= lambda pkt: process_packet(pkt, discovered_networks))
 
     return discovered_networks
