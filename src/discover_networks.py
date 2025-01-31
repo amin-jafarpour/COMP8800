@@ -3,7 +3,7 @@ import time
 
 
 
-def packet_handler(iface, count, interval=0.2):
+def discover_networks(iface, count, interval=0.2):
     """
     """
     discovered_networks = {}
