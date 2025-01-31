@@ -39,7 +39,12 @@ def get_cidr(iface):
 
 def ip_mac_bindings(iface):
     cidr = get_cidr(iface)
-
+    digits = cidr.split('.')
+    last_digit = digits[3]
+    mask = last_digit.split('/')[1]
+    net_cidr = '.'.join(digits[:3] + ['0']) + '/' + mask
+    print(net_cidr)
+     
     if cidr == None:
        return None
 
