@@ -1,23 +1,18 @@
 import subprocess
 
-def run_command(iface):
+def change_mode(iface, mode):
     """
-
     """
     cmds = [
-    f"sudo ip link set dev {iface} down",
-    f"sudo ip link set dev {iface} name wlp",
-    f"sudo iw set dev wlp type monitor", # f"sudo iw dev wlp set type monitor",
-    f"sudo ip link set dev wlp up"
+    f"sudo ip link set {iface} down",
+    f"sudo iw dev {iface} set type {mode}", 
+    f"sudo ip link set {iface} up"
     ]
     try:
         subprocess.run(cmds, shell=True, check=True, text=True)
-        print(f"Executed: {cmds}")
     except subprocess.CalledProcessError as e:
-        print(f"Error executing {cmds}: {e}")
+        print(f"Error: {e}")
 
 
 
 
-
-run_command('wlp')
