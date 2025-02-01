@@ -26,7 +26,8 @@ def process_packet(pkt, discovered_networks, limit):
    if pkt.haslayer(Dot11) and len(discovered_networks) < limit:
 
       bssid = pkt[Dot11].addr2
-      if bssid not in discovered_networks:
+
+      if bssid == None and  bssid not in discovered_networks:
          pkt_info = bundle(pkt)
          discovered_networks[bssid] = pkt_info
 
@@ -48,6 +49,8 @@ def main():
     networks = discover_networks(sys.argv[1], int(sys.argv[2]))
     for key in networks:
         print(key)
+
+
 
 
 
