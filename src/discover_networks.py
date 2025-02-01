@@ -34,6 +34,42 @@ def process_packet(pkt, discovered_networks, limit):
 
 
 
+def discover_networks(iface, limit):
+    discovered_networks = {}
+
+    while (len(discovered_networks) < limit):
+        sniff(iface=iface, count=limit, store=False, prn=lambda pkt: process_packet(pkt, discovered_networks, limit))
+    return discovered_networks
+
+
+
+
+def main():
+    networks = discover_networks(sys.argv[1], int(sys.argv[2])
+    for key, _ in networks:
+        print(key)
+
+
+
+
+
+if __name__ == '__main__':
+    main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #    bssid = pkt[Dot11].addr2
 #    if bssid in discovered_networks:
@@ -55,25 +91,3 @@ def process_packet(pkt, discovered_networks, limit):
 #    crypto = stats_dict.get("crypto", "N/A")
 #    rssi = pkt.dBm_AntSignal if hasattr(pkt, 'dBm_AntSignal') else "N/A"
 #    discovered_networks[bssid] = {"ssid": ssid,"bssid": bssid,"channel": channel,"encryption": crypto,"rssi": rssi}
-
-
-
-
-def discover_networks(iface, limit):
-    discovered_networks = {}
-
-    while (len(discovered_networks) < limit):
-        sniff(iface=iface, count=limit, store=False, prn=lambda pkt: process_packet(pkt, discovered_networks, limit))
-
-
-    print('...', len(discovered_networks))
-    return discovered_networks
-
-
-
-
-
-
-
-print(discover_networks(sys.argv[1], int(sys.argv[2])))
-
