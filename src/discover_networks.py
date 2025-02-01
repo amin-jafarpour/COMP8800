@@ -46,6 +46,11 @@ def discover_networks(iface, limit):
 
 
 def main():
+    if len(sys.argv) < 3:
+        print('Error: Missing comamnd line arguments.')
+        print(f'{sys.argv[0]} <Interface> <PacketCount>')
+        sys.exit(1)
+
     networks = discover_networks(sys.argv[1], int(sys.argv[2]))
     for key in networks:
         print(key)
