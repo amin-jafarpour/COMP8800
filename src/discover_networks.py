@@ -23,6 +23,7 @@ def bundle(pkt):
 
 
 def process_packet(pkt, discovered_networks, limit):
+   print(limit)
    if pkt.haslayer(Dot11) and len(discovered_networks) < limit:
 
       bssid = pkt[Dot11].addr2
