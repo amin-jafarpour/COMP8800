@@ -62,7 +62,7 @@ def process_packet(pkt, discovered_networks, limit):
 def discover_networks(iface, limit):
     discovered_networks = {}
 
-    while (len(discovered_networks) <= limit):
+    while (len(discovered_networks) < limit):
         sniff(iface=iface, count=limit, store=False, prn=lambda pkt: process_packet(pkt, discovered_networks, limit))
 
 
