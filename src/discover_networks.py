@@ -6,10 +6,8 @@ def process_packet(pkt, discovered_networks):
    print(pkt)
 
    if not (pkt.haslayer(Dot11Beacon)  or pkt.haslayer(Dot11ProbeResp) or pkt.haslayer(Dot11Elt)):
-       print('BAD PACKET')
        return
-
-   print('ACCEPTABLE PACKET')
+   return
    bssid = pkt[Dot11].addr2
    if bssid in discovered_networks:
        return
