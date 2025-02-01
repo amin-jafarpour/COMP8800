@@ -22,8 +22,8 @@ def bundle(pkt):
 
 
 
-def process_packet(pkt, discovered_networks):
-   if pkt.haslayer(Dot11):
+def process_packet(pkt, discovered_networks, limit):
+   if pkt.haslayer(Dot11) and len(discovered_networks) < limit:
 
       bssid = pkt[Dot11].addr2
       if bssid not in discovered_networks:
@@ -59,14 +59,14 @@ def process_packet(pkt, discovered_networks):
 
 
 
-def discover_networks(iface, count):
+def discover_networks(iface, limit):
     discovered_networks = {}
 
-    while (len(discovered_networks) <= count):
-        print(discovered_networks)
-        sniff(iface=iface, count=count, store=False, prn= lambda pkt: process_packet(pkt, discovered_networks))
-        print(len(discovered_networks))
+    while (len(discovered_networks) <= limit):
+        sniff(iface=iface, count=limit, store=False, prn=lambda pkt: process_packet(pkt, discovered_networks, limit))
 
+
+    print('...', len(discovered_networks))
     return discovered_networks
 
 
@@ -77,4 +77,3 @@ def discover_networks(iface, count):
 
 print(discover_networks(sys.argv[1], int(sys.argv[2])))
 
-p
