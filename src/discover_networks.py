@@ -3,10 +3,13 @@ import time
 import sys
 
 def process_packet(pkt, discovered_networks):
+   print(pkt)
 
-   if not (pkt.haslayer(Dot11Beacon) or pkt.haslayer(Dot11ProbeResp)):
+   if not (pkt.haslayer(Dot11Beacon)  or pkt.haslayer(Dot11ProbeResp) or pkt.haslayer(Dot11Elt)):
+       print('BAD PACKET')
        return
 
+   print('ACCEPTABLE PACKET')
    bssid = pkt[Dot11].addr2
    if bssid in discovered_networks:
        return
@@ -36,7 +39,7 @@ def discover_networks(iface, count):
 
     while (len(discovered_networks) <= count):
         print(discovered_networks)
-        sniff(iface=iface, store=False, count=10, prn= lambda pkt: process_packet(pkt, discovered_networks))
+        sniff(iface=iface, count=count, store=False, prn= lambda pkt: process_packet(pkt, discovered_networks))
 
     return discovered_networks
 
