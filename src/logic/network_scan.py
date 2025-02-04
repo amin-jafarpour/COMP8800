@@ -62,7 +62,7 @@ def main():
     change_mode(sys.argv[1], 'monitor')
     networks = discover_networks(sys.argv[1], int(sys.argv[2]))
     for key, value in networks.items():
-        print(f'BSSID: key')
+        print(f'BSSID: {key}')
         pprint.pprint(value)
 
     change_mode(sys.argv[1], 'managed')
