@@ -5,10 +5,13 @@ import pprint
 
 
 def pretty_print(obj):
-   if type(obj) == 'dict':
-      pprint.pprint(obj)
+   if type(obj) == 'dict'
+   for key, value in obj.items():
+         print(key)
+         pretty_print(value)
    elif type(obj) == 'list':
-       print(obj)
+      for elem in obj:
+         print(elem)
    else:
       print(obj)
 
@@ -73,7 +76,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
 
 
 
