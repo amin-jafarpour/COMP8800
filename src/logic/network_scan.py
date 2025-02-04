@@ -52,8 +52,8 @@ def main():
         sys.exit(1)
 
     networks = discover_networks(sys.argv[1], int(sys.argv[2]))
-    for key in networks:
-        print(key)
+    for key, value in networks.items():
+        print(key, value)
 
 
 
