@@ -2,6 +2,8 @@ from scapy.all import sniff, Dot11, Dot11Beacon, Dot11ProbeResp, Dot11Elt
 import time
 import sys
 import pprint
+from iface_mode import change_mode
+
 
 
 
@@ -56,10 +58,14 @@ def main():
         print(f'{sys.argv[0]} <Interface> <PacketCount>')
         sys.exit(1)
 
+
+    change_mode(sys.argv[1], 'monitor')
     networks = discover_networks(sys.argv[1], int(sys.argv[2]))
     for key, value in networks.items():
-        print(key)
+        print(f'BSSID: key')
         pprint.pprint(value)
+
+    change_mode(sys.argv[1], 'managed')
 
 
 
@@ -68,7 +74,7 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
+   main()
 
 
 
