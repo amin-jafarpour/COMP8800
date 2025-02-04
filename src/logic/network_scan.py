@@ -4,16 +4,7 @@ import sys
 import pprint
 
 
-def pretty_print(obj):
-   if type(obj) == 'dict'
-   for key, value in obj.items():
-         print(key)
-         pretty_print(value)
-   elif type(obj) == 'list':
-      for elem in obj:
-         print(elem)
-   else:
-      print(obj)
+
 
 
 
@@ -67,7 +58,8 @@ def main():
 
     networks = discover_networks(sys.argv[1], int(sys.argv[2]))
     for key, value in networks.items():
-        print(key, value)
+        print(key)
+        pprint.print(value)
 
 
 
