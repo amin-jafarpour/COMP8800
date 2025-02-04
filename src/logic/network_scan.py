@@ -59,7 +59,7 @@ def main():
     networks = discover_networks(sys.argv[1], int(sys.argv[2]))
     for key, value in networks.items():
         print(key)
-        pprint.print(value)
+        pprint.pprint(value)
 
 
 
