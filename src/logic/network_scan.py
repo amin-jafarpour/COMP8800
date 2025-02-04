@@ -1,6 +1,17 @@
 from scapy.all import sniff, Dot11, Dot11Beacon, Dot11ProbeResp, Dot11Elt
 import time
 import sys
+import pprint
+
+
+def pretty_print(obj):
+   if type(obj) == 'dict':
+      pprint.pprint(obj)
+   elif type(obj) == 'list':
+       print(obj)
+   else:
+      print(obj)
+
 
 
 
