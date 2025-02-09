@@ -5,10 +5,14 @@ from gi.repository import Gtk
 
 # --- Attempt to import Scapy ---
 try:
-    from scapy.all import Ether
+    from scapy.all import Ether, sr1
     has_scapy = True
 except ImportError:
     has_scapy = False
+    
+    
+    
+TIMEOUT_SECONDS = 3
     
     
 # ------------------- Ethernet (Data Link) Window -------------------
@@ -70,7 +74,7 @@ class EthernetWindow(Gtk.Window):
         quit_button.connect("clicked", lambda w: self.destroy())
         button_box.pack_start(quit_button, True, True, 0)
 
-    def on_construct_clicked(self, button):
+    def on_construct_clicked(self, button, recv_callback):
         # Read the fields
         dst_mac = self.dst_entry.get_text()
         src_mac = self.src_entry.get_text()
@@ -100,8 +104,12 @@ class EthernetWindow(Gtk.Window):
         if has_scapy:
             # Construct the Ethernet frame
             ether_frame = Ether(dst=dst_mac, src=src_mac, type=ethertype)
+            response = sr1(ether_frame, timeout=TIMEOUT_SECONDS, verbose=False) 
+            recv_callback(response)
             
-            print(f"Constructed Ethernet Frame: {ether_frame.summary()}")
+            
+            
+            
         else:
             print("Scapy not available; install with 'pip install scapy' to construct frames.")
 
