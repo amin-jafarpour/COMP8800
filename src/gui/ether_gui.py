@@ -5,7 +5,7 @@ from gi.repository import Gtk
 
 # --- Attempt to import Scapy ---
 try:
-    from scapy.all import IP, TCP, UDP, ICMP, Ether
+    from scapy.all import Ether
     has_scapy = True
 except ImportError:
     has_scapy = False
@@ -100,6 +100,7 @@ class EthernetWindow(Gtk.Window):
         if has_scapy:
             # Construct the Ethernet frame
             ether_frame = Ether(dst=dst_mac, src=src_mac, type=ethertype)
+            
             print(f"Constructed Ethernet Frame: {ether_frame.summary()}")
         else:
             print("Scapy not available; install with 'pip install scapy' to construct frames.")

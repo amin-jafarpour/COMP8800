@@ -4,7 +4,7 @@ from gi.repository import Gtk
 
 # --- Attempt to import Scapy ---
 try:
-    from scapy.all import IP, TCP, UDP, ICMP, Ether
+    from scapy.all import IP
     has_scapy = True
 except ImportError:
     has_scapy = False
