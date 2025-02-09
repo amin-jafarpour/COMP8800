@@ -29,5 +29,5 @@ class ResponseScrollableWindow(Gtk.Window):
         self.add(scrolled_window)
 
         # Close event
-        self.connect("destroy", Gtk.main_quit)
+        # self.connect("destroy", self)
 
