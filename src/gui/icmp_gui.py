@@ -2,14 +2,20 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+from response_scrollable_gui import ResponseScrollableWindow
+
+
 # --- Attempt to import Scapy ---
 try:
-    from scapy.all import ICMP
+    from scapy.all import ICMP, sr1
     has_scapy = True
 except ImportError:
     has_scapy = False
     
     
+TIMEOUT_SECONDS = 3
+
+
 # ------------------- ICMP Packet Window -------------------
 class ICMPPacketWindow(Gtk.Window):
     def __init__(self):
@@ -107,7 +113,12 @@ class ICMPPacketWindow(Gtk.Window):
                 id=icmp_id,
                 seq=icmp_seq
             )
-            print(f"Constructed ICMP Packet: {icmp_pkt.summary()}")
+            
+            response = sr1(icmp_pkt, timeout=TIMEOUT_SECONDS, verbose=False) 
+            display_text = response.show() if response != None else "No Response Received"
+            res_win = ResponseScrollableWindow(display_text=display_text)
+            res_win.show_all()
+            # print(f"Constructed ICMP Packet: {icmp_pkt.summary()}")
         else:
             print("Scapy not available; install with 'pip install scapy' to construct packets.")
 

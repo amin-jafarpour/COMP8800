@@ -77,7 +77,7 @@ class EthernetWindow(Gtk.Window):
         quit_button.connect("clicked", lambda w: self.destroy())
         button_box.pack_start(quit_button, True, True, 0)
 
-    def on_construct_clicked(self, button, recv_callback= lambda x: None):
+    def on_construct_clicked(self, button):
         # Read the fields
         dst_mac = self.dst_entry.get_text()
         src_mac = self.src_entry.get_text()
@@ -108,7 +108,6 @@ class EthernetWindow(Gtk.Window):
             # Construct the Ethernet frame
             ether_frame = Ether(dst=dst_mac, src=src_mac, type=ethertype)
             response = sr1(ether_frame, timeout=TIMEOUT_SECONDS, verbose=False) 
-            recv_callback(response)
             display_text = response.show() if response != None else "No Response Received"
             res_win = ResponseScrollableWindow(display_text=display_text)
             res_win.show_all()

@@ -2,14 +2,22 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+
+from response_scrollable_gui import ResponseScrollableWindow
+
+
 # --- Attempt to import Scapy ---
 try:
-    from scapy.all import TCP
+    from scapy.all import TCP, sr1
     has_scapy = True
 except ImportError:
     has_scapy = False
     
     
+    
+TIMEOUT_SECONDS = 3
+
+
 # ------------------- TCP Packet Window -------------------
 class TCPPacketWindow(Gtk.Window):
     def __init__(self):
@@ -191,6 +199,10 @@ class TCPPacketWindow(Gtk.Window):
                 chksum=chksum if chksum != 0 else None,
                 urgptr=urp
             )
-            print(f"Constructed TCP Packet: {tcp_pkt.summary()}")
+            response = sr1(tcp_pkt, timeout=TIMEOUT_SECONDS, verbose=False) 
+            display_text = response.show() if response != None else "No Response Received"
+            res_win = ResponseScrollableWindow(display_text=display_text)
+            res_win.show_all()
+            # print(f"Constructed TCP Packet: {tcp_pkt.summary()}")
         else:
             print("Scapy not available; install with 'pip install scapy' to construct packets.")

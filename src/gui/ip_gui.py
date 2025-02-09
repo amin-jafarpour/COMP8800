@@ -2,14 +2,19 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+
+from response_scrollable_gui import ResponseScrollableWindow
+
+
 # --- Attempt to import Scapy ---
 try:
-    from scapy.all import IP
+    from scapy.all import IP, sr1
     has_scapy = True
 except ImportError:
     has_scapy = False
     
-    
+TIMEOUT_SECONDS = 3
+
 # ------------------- IP Packet Window -------------------
 class IPPacketWindow(Gtk.Window):
     def __init__(self):
@@ -198,7 +203,11 @@ class IPPacketWindow(Gtk.Window):
                 src=src_ip,
                 dst=dst_ip
             )
-            print(f"Constructed IP Packet: {ip_pkt.summary()}")
+            response = sr1(ip_pkt, timeout=TIMEOUT_SECONDS, verbose=False) 
+            display_text = response.show() if response != None else "No Response Received"
+            res_win = ResponseScrollableWindow(display_text=display_text)
+            res_win.show_all()
+            # print(f"Constructed IP Packet: {ip_pkt.summary()}")
         else:
             print("Scapy not available; install with 'pip install scapy' to construct packets.")
 
