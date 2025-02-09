@@ -93,6 +93,12 @@ class MainWindow(Gtk.Window):
         ether_window.show_all()
 
 
+
+
+
+
+
+
 def main():
     win = MainWindow()
     win.connect("destroy", Gtk.main_quit)
