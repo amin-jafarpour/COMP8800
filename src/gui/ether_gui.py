@@ -69,7 +69,7 @@ class EthernetWindow(Gtk.Window):
         button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
         main_vbox.pack_start(button_box, False, False, 0)
 
-        construct_button = Gtk.Button(label="Construct Ethernet Frame")
+        construct_button = Gtk.Button(label="Send Ethernet Frame")
         construct_button.connect("clicked", self.on_construct_clicked)
         button_box.pack_start(construct_button, True, True, 0)
 
