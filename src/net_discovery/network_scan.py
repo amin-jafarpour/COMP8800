@@ -11,6 +11,8 @@ ESSENTIAL_FIEDS = ['BSSID', 'addr1', 'addr2', 'addr3', 'country_string', 'num_ch
 
 
 
+
+
 def bundle(pkt):
    layers = [layer.__name__ for layer in pkt.layers()]
    info = {}
