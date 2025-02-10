@@ -20,7 +20,7 @@ TIMEOUT_SECONDS = 3
 class ICMPPacketWindow(Gtk.Window):
     def __init__(self):
         super().__init__(title="ICMP Packet Constructor")
-        self.set_border_width(10)
+        self.set_border_width(10) 
         self.set_default_size(600, 400)
 
         main_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
