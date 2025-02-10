@@ -5,7 +5,7 @@ import pprint
 from iface_mode import change_mode
 
 
-ESSENTIAL_FIEDS = ['BSSID', 'addr1', 'addr2', 'addr3', 'country_string', 'num_channels=11', 'dBm_AntSignal', 'rates', 'ChannelFrequency', 'rate']
+ESSENTIAL_FIEDS = ['BSSID', 'addr1', 'addr2', 'addr3', 'country_string', 'num_channels=11', 'dBm_AntSignal', 'rates', 'ChannelFrequency', 'rate', 'info']
 
 
 
