@@ -69,6 +69,7 @@ class RadarWindow(Gtk.Window):
             ssid = ssid if ssid != "" else "Hidden"
             cr.show_text(ssid)
            
+           
     
     # def on_click(self, _, event):
     #     for target in self.targets:
