@@ -10,14 +10,14 @@ from gi.repository import Gtk, Gdk
 class RadarWindow(Gtk.Window):
     def __init__(self, network_lst):
         super().__init__(title="Network Detector")
-        self.set_default_size(1000, 1000)
+        self.set_default_size(1000, 500)
         self.set_resizable(True)
         self.connect("destroy", Gtk.main_quit)
         
         self.targets = self.network_targets(network_lst) # $ popualte with networks
         
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_size_request(1000, 1000) # $ change to current window size
+        self.drawing_area.set_size_request(1000, 500) # $ change to current window size
         self.drawing_area.connect("draw", self.on_draw)
         self.drawing_area.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
         self.drawing_area.connect("button-press-event", self.on_click)
@@ -30,7 +30,7 @@ class RadarWindow(Gtk.Window):
             value = network['dBm_AntSignal']
             angle = random.uniform(0, 2 * math.pi)
             distance = (100 + value) * 2  # Scale to fit radar
-            x = 250 + distance * math.cos(angle)
+            x = 500 + distance * math.cos(angle)
             y = 250 + distance * math.sin(angle)
             targets.append({"x": x, "y": y, "value": value, "network": network})
         return targets
@@ -42,14 +42,14 @@ class RadarWindow(Gtk.Window):
         
         cr.set_source_rgb(0, 1, 0)
         for i in range(1, 5):
-            cr.arc(250, 250, i * 50, 0, 2 * math.pi)
+            cr.arc(500, 250, i * 50, 0, 2 * math.pi) # 250
             cr.stroke()
         
         # Draw Lines
         for angle in range(0, 360, 45):
             rad = math.radians(angle)
-            cr.move_to(250, 250)
-            cr.line_to(250 + 200 * math.cos(rad), 250 + 200 * math.sin(rad))
+            cr.move_to(500, 250)
+            cr.line_to(500 + 200 * math.cos(rad), 250 + 200 * math.sin(rad))
             cr.stroke()
         
         # Draw Targets
