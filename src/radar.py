@@ -7,7 +7,7 @@ from gi.repository import Gtk, Gdk
 
 class RadarWindow(Gtk.Window):
     def __init__(self):
-        super().__init__(title="Military Radar")
+        super().__init__(title="Network Detector")
         self.set_default_size(500, 500)
         self.set_resizable(False)
         self.connect("destroy", Gtk.main_quit)
