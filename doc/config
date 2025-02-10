@@ -1,1 +1,10 @@
 pip install pygobject scapy 
+
+
+
+
+
+
+sudo pacman -S gtk3 cairo gobject-introspection
+
+
