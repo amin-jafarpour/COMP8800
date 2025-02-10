@@ -57,10 +57,11 @@ class RadarWindow(Gtk.Window):
         
         # Draw Targets
         for target in self.targets:
+            cr.show_text(target['network']['info'])
             cr.set_source_rgb(1, 0, 0)
             cr.arc(target["x"], target["y"], 5, 0, 2 * math.pi)
             cr.fill()
-            cr.show_text(target['network']['info'])
+           
     
     def on_click(self, _, event):
         for target in self.targets:
