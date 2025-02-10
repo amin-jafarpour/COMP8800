@@ -1,20 +1,23 @@
 import gi
 import math
 import random
+import sys
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 
 
-class RadarWindow(Gtk.Window):
-    def __init__(self, network_lst):
+from network_scan import get_network_lst
+
+class RadarWindow(Gtk.Window, iface: str, pkt_count: int):
+    def __init__(self):
         super().__init__(title="Network Detector")
         self.set_default_size(1000, 500)
         self.set_resizable(True)
         self.connect("destroy", Gtk.main_quit)
         
-        self.targets = self.network_targets(network_lst) # $ popualte with networks
+        self.targets = self.network_targets(get_network_lst(iface, pkt_count)) # $ popualte with networks
         
         self.drawing_area = Gtk.DrawingArea()
         self.drawing_area.set_size_request(1000, 500) # $ change to current window size
@@ -73,4 +76,18 @@ class TargetInfoWindow(Gtk.Window):
         self.show_all()
 
 
+
+def main():
+    win = RadarWindow(sys.argv[1], int(sys.argv[2]))
+    win.show_all()
+    Gtk.main()
+
+
+
+if __name__ '__main__':
+    if len(sys.argv) < 3:
+        print('Error: Missing comamnd line arguments.')
+        print(f'{sys.argv[0]} <Interface> <PacketCount>')
+        sys.exit(1)
+    
 

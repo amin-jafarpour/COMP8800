@@ -3,13 +3,7 @@ import time
 import sys
 import pprint
 from iface_mode import change_mode
-import radar 
 
-
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 
 
 
@@ -85,6 +79,16 @@ def extract_fields(data, keys, result=None, duplicates=0):
 
 
 
+def get_network_lst(iface):
+    change_mode(sys.argv[1], 'monitor')
+    networks = discover_networks(sys.argv[1], int(sys.argv[2]))
+    network_lst = []
+    for key, value in networks.items():
+        res = extract_fields(value, ESSENTIAL_FIEDS)
+        network_lst.append(res)
+    change_mode(sys.argv[1], 'managed')
+    return network_lst
+
 
 
 
@@ -104,10 +108,6 @@ def main():
         res = extract_fields(value, ESSENTIAL_FIEDS)
         network_lst.append(res)
         pprint.pprint(res)
-        
-    win = radar.RadarWindow(network_lst)
-    win.show_all()
-    Gtk.main()
     
 
     change_mode(sys.argv[1], 'managed')
