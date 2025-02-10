@@ -3,7 +3,7 @@ import math
 import random
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GdkPixbuf, cairo
+from gi.repository import Gtk, Gdk
 
 class RadarWindow(Gtk.Window):
     def __init__(self):
