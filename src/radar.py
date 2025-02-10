@@ -2,6 +2,7 @@ import gi
 import math
 import random
 import sys
+import pprint 
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -9,6 +10,7 @@ from gi.repository import Gtk, Gdk
 
 
 from network_scan import get_network_lst
+from response_scrollable_gui import ResponseScrollableWindow
 
 class RadarWindow(Gtk.Window):
     def __init__(self, iface: str, pkt_count: int):
@@ -61,17 +63,26 @@ class RadarWindow(Gtk.Window):
             cr.set_source_rgb(1, 0, 0)
             cr.arc(target["x"], target["y"], 5, 0, 2 * math.pi)
             cr.fill()
-            cr.set_font_size(40)
+            cr.set_font_size(15)
             cr.move_to(target["x"] + 10, target["y"]) 
-            ssid = target['network']['info'].decode('utf-8')
+            ssid = target['network'].get('info', bytes()).decode('utf-8')
             ssid = ssid if ssid != "" else "Hidden"
             cr.show_text(ssid)
            
     
+    # def on_click(self, _, event):
+    #     for target in self.targets:
+    #         if math.hypot(event.x - target["x"], event.y - target["y"]) < 5:
+    #             TargetInfoWindow(target)
+    #             break
+    
+    
     def on_click(self, _, event):
         for target in self.targets:
             if math.hypot(event.x - target["x"], event.y - target["y"]) < 5:
-                TargetInfoWindow(target)
+                net_info = pprint.pformat(target['network'], indent=4, width=100, compact=False)
+                win = ResponseScrollableWindow(net_info)
+                win.show_all()
                 break
 
 class TargetInfoWindow(Gtk.Window):
