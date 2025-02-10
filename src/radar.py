@@ -22,12 +22,12 @@ class RadarWindow(Gtk.Window):
         
         self.add(self.drawing_area)
 
-    def generate_targets(self, num_targets):
+    def network_points(self, network_lst):
         targets = []
-        for _ in range(num_targets):
-            value = random.uniform(0, 100)
+        for network in range(network_lst):
+            value = network['dBm_AntSignal']
             angle = random.uniform(0, 2 * math.pi)
-            distance = (100 - value) * 2  # Scale to fit radar
+            distance = (100 + value) * 2  # Scale to fit radar
             x = 250 + distance * math.cos(angle)
             y = 250 + distance * math.sin(angle)
             targets.append({"x": x, "y": y, "value": value})
