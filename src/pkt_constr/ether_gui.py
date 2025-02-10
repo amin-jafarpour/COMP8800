@@ -17,6 +17,7 @@ except ImportError:
     
 TIMEOUT_SECONDS = 3
     
+  
     
 # ------------------- Ethernet (Data Link) Window -------------------
 class EthernetWindow(Gtk.Window):
