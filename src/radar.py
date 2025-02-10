@@ -6,13 +6,13 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 
 class RadarWindow(Gtk.Window):
-    def __init__(self):
+    def __init__(self, network_lst):
         super().__init__(title="Network Detector")
         self.set_default_size(500, 500)
         self.set_resizable(True)
         self.connect("destroy", Gtk.main_quit)
         
-        self.targets = self.generate_targets(10) # $ popualte with networks
+        self.targets = self.network_targets(network_lst) # $ popualte with networks
         
         self.drawing_area = Gtk.DrawingArea()
         self.drawing_area.set_size_request(500, 500) # $ change to current window size
@@ -22,7 +22,7 @@ class RadarWindow(Gtk.Window):
         
         self.add(self.drawing_area)
 
-    def network_points(self, network_lst):
+    def network_targets(self, network_lst):
         targets = []
         for network in range(network_lst):
             value = network['dBm_AntSignal']
@@ -30,7 +30,7 @@ class RadarWindow(Gtk.Window):
             distance = (100 + value) * 2  # Scale to fit radar
             x = 250 + distance * math.cos(angle)
             y = 250 + distance * math.sin(angle)
-            targets.append({"x": x, "y": y, "value": value})
+            targets.append({"x": x, "y": y, "value": value, network: network})
         return targets
     
     def on_draw(self, _, cr):
@@ -56,10 +56,10 @@ class RadarWindow(Gtk.Window):
             cr.arc(target["x"], target["y"], 5, 0, 2 * math.pi)
             cr.fill()
     
-    def on_click(self, widget, event):
+    def on_click(self, _, event):
         for target in self.targets:
             if math.hypot(event.x - target["x"], event.y - target["y"]) < 5:
-                TargetInfoWindow(target)
+                TargetInfoWindow(target, str(target['network']))
                 break
 
 class TargetInfoWindow(Gtk.Window):
@@ -70,7 +70,5 @@ class TargetInfoWindow(Gtk.Window):
         self.add(label)
         self.show_all()
 
-if __name__ == "__main__":
-    win = RadarWindow()
-    win.show_all()
-    Gtk.main()
+
+

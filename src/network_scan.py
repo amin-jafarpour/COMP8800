@@ -3,7 +3,7 @@ import time
 import sys
 import pprint
 from iface_mode import change_mode
-
+import radar 
 
 ESSENTIAL_FIEDS = ['BSSID', 'addr1', 'addr2', 'addr3', 'country_string', 'num_channels=11', 'dBm_AntSignal', 'rates', 'ChannelFrequency', 'rate', 'info']
 
@@ -89,11 +89,18 @@ def main():
 
     change_mode(sys.argv[1], 'monitor')
     networks = discover_networks(sys.argv[1], int(sys.argv[2]))
+    network_lst = []
     for key, value in networks.items():
         print(f'BSSID: {key}')
         # pprint.pprint(value)
         res = extract_fields(value, ESSENTIAL_FIEDS)
+        network_lst.append(res)
         pprint.pprint(res)
+        
+    win = radar.RadarWindow(network_lst)
+    win.show_all()
+    Gtk.main()
+    
 
     change_mode(sys.argv[1], 'managed')
 
