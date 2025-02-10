@@ -5,7 +5,7 @@ import pprint
 from iface_mode import change_mode
 
 
-
+ESSENTIAL_FIEDS = ['BSSID', 'addr1', 'addr2', 'addr3', 'country_string', 'num_channels=11', 'dBm_AntSignal', 'rates', 'ChannelFrequency', 'rate']
 
 
 
@@ -50,6 +50,33 @@ def discover_networks(iface, limit):
 
 
 
+def extract_fields(data, keys, result=None, duplicates=0):
+    keys = list(map(lambda x: x.lower(), keys))
+    
+    if result is None:
+        result = {}
+
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if key.lower() in keys:
+                if key.lower() in result:
+                    duplicates = duplicates + 1
+                    result[key.lower() + str(duplicates)] = value
+                else:
+                    result[key] = value  # Store the value
+            extract_fields(value, keys, result, duplicates)  # Recursive call
+
+    elif isinstance(data, list):
+        for item in data:
+            extract_fields(item, keys, result, duplicates)  # Recursive call
+
+    return result
+
+
+
+
+
+
 
 def main():
     if len(sys.argv) < 3:
@@ -62,7 +89,9 @@ def main():
     networks = discover_networks(sys.argv[1], int(sys.argv[2]))
     for key, value in networks.items():
         print(f'BSSID: {key}')
-        pprint.pprint(value)
+        # pprint.pprint(value)
+        res = extract_fields(networks, ESSENTIAL_FIEDS)
+        pprint.pprint(res)
 
     change_mode(sys.argv[1], 'managed')
 
