@@ -10,8 +10,8 @@ from gi.repository import Gtk, Gdk
 
 from network_scan import get_network_lst
 
-class RadarWindow(Gtk.Window, iface: str, pkt_count: int):
-    def __init__(self):
+class RadarWindow(Gtk.Window):
+    def __init__(self, iface: str, pkt_count: int):
         super().__init__(title="Network Detector")
         self.set_default_size(1000, 500)
         self.set_resizable(True)
@@ -78,16 +78,19 @@ class TargetInfoWindow(Gtk.Window):
 
 
 def main():
+    if len(sys.argv) < 3:
+        print('Error: Missing comamnd line arguments.')
+        print(f'{sys.argv[0]} <Interface> <PacketCount>')
+        sys.exit(1)
+
     win = RadarWindow(sys.argv[1], int(sys.argv[2]))
     win.show_all()
     Gtk.main()
 
 
 
-if __name__ '__main__':
-    if len(sys.argv) < 3:
-        print('Error: Missing comamnd line arguments.')
-        print(f'{sys.argv[0]} <Interface> <PacketCount>')
-        sys.exit(1)
+if __name__ == '__main__':
+
+    main()
     
 

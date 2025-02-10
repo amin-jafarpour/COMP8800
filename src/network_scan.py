@@ -79,14 +79,14 @@ def extract_fields(data, keys, result=None, duplicates=0):
 
 
 
-def get_network_lst(iface):
-    change_mode(sys.argv[1], 'monitor')
-    networks = discover_networks(sys.argv[1], int(sys.argv[2]))
+def get_network_lst(iface, pkt_count):
+    change_mode(iface, 'monitor')
+    networks = discover_networks(iface, pkt_count)
     network_lst = []
     for key, value in networks.items():
         res = extract_fields(value, ESSENTIAL_FIEDS)
         network_lst.append(res)
-    change_mode(sys.argv[1], 'managed')
+    change_mode(iface, 'managed')
     return network_lst
 
 
