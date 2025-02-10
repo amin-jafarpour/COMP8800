@@ -92,7 +92,6 @@ def main():
     for key, value in networks.items():
         print(f'BSSID: {key}')
         # pprint.pprint(value)
-        print('heeey')
         res = extract_fields(value, ESSENTIAL_FIEDS)
         pprint.pprint(res)
 
