@@ -93,6 +93,7 @@ def main():
         print(f'BSSID: {key}')
         # pprint.pprint(value)
         res = extract_fields(value, ESSENTIAL_FIEDS)
+        res['bssid'] = key
         pprint.pprint(res)
 
     change_mode(sys.argv[1], 'managed')

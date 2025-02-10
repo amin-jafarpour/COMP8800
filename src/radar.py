@@ -9,13 +9,13 @@ class RadarWindow(Gtk.Window):
     def __init__(self):
         super().__init__(title="Network Detector")
         self.set_default_size(500, 500)
-        self.set_resizable(False)
+        self.set_resizable(True)
         self.connect("destroy", Gtk.main_quit)
         
-        self.targets = self.generate_targets(10)
+        self.targets = self.generate_targets(10) # $ popualte with networks
         
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_size_request(500, 500)
+        self.drawing_area.set_size_request(500, 500) # $ change to current window size
         self.drawing_area.connect("draw", self.on_draw)
         self.drawing_area.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
         self.drawing_area.connect("button-press-event", self.on_click)
@@ -33,7 +33,7 @@ class RadarWindow(Gtk.Window):
             targets.append({"x": x, "y": y, "value": value})
         return targets
     
-    def on_draw(self, widget, cr):
+    def on_draw(self, _, cr):
         # Draw Radar Circles
         cr.set_source_rgb(0, 0.5, 0)
         cr.paint()
@@ -63,13 +63,11 @@ class RadarWindow(Gtk.Window):
                 break
 
 class TargetInfoWindow(Gtk.Window):
-    def __init__(self, target):
-        super().__init__(title="Target Information")
+    def __init__(self, network_info):
+        super().__init__(title="Network Information")
         self.set_default_size(200, 100)
-        
-        label = Gtk.Label(label=f"Target Value: {target['value']:.2f}")
+        label = Gtk.Label(label=network_info)
         self.add(label)
-        
         self.show_all()
 
 if __name__ == "__main__":
