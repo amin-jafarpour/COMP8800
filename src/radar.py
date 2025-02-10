@@ -61,6 +61,7 @@ class RadarWindow(Gtk.Window):
             cr.set_source_rgb(1, 0, 0)
             cr.arc(target["x"], target["y"], 5, 0, 2 * math.pi)
             cr.fill()
+            cr.set_font_size(40)
             cr.move_to(target["x"] + 10, target["y"]) 
             ssid = target['network']['info'].decode('utf-8')
             ssid = ssid if ssid != "" else "Hidden"
