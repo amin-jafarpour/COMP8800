@@ -2,8 +2,10 @@ import gi
 import math
 import random
 
+import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
+
 
 class RadarWindow(Gtk.Window):
     def __init__(self, network_lst):
@@ -24,13 +26,13 @@ class RadarWindow(Gtk.Window):
 
     def network_targets(self, network_lst):
         targets = []
-        for network in range(network_lst):
+        for network in network_lst:
             value = network['dBm_AntSignal']
             angle = random.uniform(0, 2 * math.pi)
             distance = (100 + value) * 2  # Scale to fit radar
             x = 250 + distance * math.cos(angle)
             y = 250 + distance * math.sin(angle)
-            targets.append({"x": x, "y": y, "value": value, network: network})
+            targets.append({"x": x, "y": y, "value": value, "network": network})
         return targets
     
     def on_draw(self, _, cr):
@@ -59,14 +61,14 @@ class RadarWindow(Gtk.Window):
     def on_click(self, _, event):
         for target in self.targets:
             if math.hypot(event.x - target["x"], event.y - target["y"]) < 5:
-                TargetInfoWindow(target, str(target['network']))
+                TargetInfoWindow(target)
                 break
 
 class TargetInfoWindow(Gtk.Window):
-    def __init__(self, network_info):
+    def __init__(self, target):
         super().__init__(title="Network Information")
         self.set_default_size(200, 100)
-        label = Gtk.Label(label=network_info)
+        label = Gtk.Label(label=str(target['network']))
         self.add(label)
         self.show_all()
 

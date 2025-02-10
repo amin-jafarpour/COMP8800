@@ -5,6 +5,14 @@ import pprint
 from iface_mode import change_mode
 import radar 
 
+
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
+
+
 ESSENTIAL_FIEDS = ['BSSID', 'addr1', 'addr2', 'addr3', 'country_string', 'num_channels=11', 'dBm_AntSignal', 'rates', 'ChannelFrequency', 'rate', 'info']
 
 
