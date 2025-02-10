@@ -90,7 +90,8 @@ def main():
     for key, value in networks.items():
         print(f'BSSID: {key}')
         # pprint.pprint(value)
-        res = extract_fields(networks, ESSENTIAL_FIEDS)
+        print('heeey')
+        res = extract_fields(value, ESSENTIAL_FIEDS)
         pprint.pprint(res)
 
     change_mode(sys.argv[1], 'managed')
