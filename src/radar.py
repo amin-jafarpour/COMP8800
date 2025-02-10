@@ -57,10 +57,14 @@ class RadarWindow(Gtk.Window):
         
         # Draw Targets
         for target in self.targets:
-            cr.show_text(target['network']['info'])
+            
             cr.set_source_rgb(1, 0, 0)
             cr.arc(target["x"], target["y"], 5, 0, 2 * math.pi)
             cr.fill()
+            cr.move_to(target["x"] + 10, target["y"]) 
+            ssid = target['network']['info'].decode('utf-8')
+            ssid = ssid if ssid != "" else "Hidden"
+            cr.show_text(ssid)
            
     
     def on_click(self, _, event):
