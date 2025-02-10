@@ -10,14 +10,14 @@ from gi.repository import Gtk, Gdk
 class RadarWindow(Gtk.Window):
     def __init__(self, network_lst):
         super().__init__(title="Network Detector")
-        self.set_default_size(500, 500)
+        self.set_default_size(1000, 1000)
         self.set_resizable(True)
         self.connect("destroy", Gtk.main_quit)
         
         self.targets = self.network_targets(network_lst) # $ popualte with networks
         
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_size_request(500, 500) # $ change to current window size
+        self.drawing_area.set_size_request(1000, 1000) # $ change to current window size
         self.drawing_area.connect("draw", self.on_draw)
         self.drawing_area.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
         self.drawing_area.connect("button-press-event", self.on_click)
