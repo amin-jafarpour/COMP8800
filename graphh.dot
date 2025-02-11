@@ -1,5 +1,6 @@
 digraph G {
-    node [shape=circle]
+//     graph[bgcolor=black];
+    node [shape=circle, fontsize=16, fillcolor=gray20];
     START [peripheries=2, color=green];
     TERMINATED [peripheries=2, color=green];
 
