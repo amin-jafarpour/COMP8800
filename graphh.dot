@@ -1,0 +1,18 @@
+digraph G {
+    node [shape=circle]
+    START [peripheries=2, color=green];
+    TERMINATED [peripheries=2, color=green];
+
+    START -> PACKET_CONSTR_WIN [label="click on packet construction window"];
+    PACKET_CONSTR_WIN -> TCP_WIN [label="click on TCP packet construction window"];
+    PACKET_CONSTR_WIN -> UDP_WIN [label="click on UDP packet construction window"];
+    PACKET_CONSTR_WIN -> IMCP_WIN [label="click on ICMP packet construction window"];
+    PACKET_CONSTR_WIN -> ETHER_WIN [label="click on ETHER packet construction window"];
+
+    START -> PASSWD_CRACK_WIN [label="click on password cracking window"];
+    START -> NET_DISCOVR_WIN [label="click on network/AP discovery window"];
+    START -> DEVICE_SCAN_WIN [label="click on device scanning window"];
+    DEVICE_SCAN_WIN -> VULNERABILITY_ASSESS_WIN [label="click on a specific device scanned to find its vulnerabilities"];
+
+}
+
