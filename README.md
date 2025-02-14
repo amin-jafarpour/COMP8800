@@ -5,9 +5,9 @@ A multi-purpose penetration testing tool capable of scanning entire networks and
 
 
 ### Requirements
-- [] Python3
-- [] Scapy
-- [] PyGTK
+- [ ] Python3
+- [ ] Scapy
+- [ ] PyGTK
 
 ./src/radar.py <Interface> <PacketCount>
 
