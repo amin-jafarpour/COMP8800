@@ -1,7 +1,12 @@
-# import os
 
-# iface_lst = os.listdir('/sys/class/net')
+import ipaddress 
+import scapy.all as scap
 
-import socket
-print(socket.gethostbyname(socket.gethostname()))
 
+iface_lst = scap.get_if_list()
+
+ip_addr_str = scap.get_if_addr(iface_lst[1])
+
+network = ipaddress.ip_network(ip_addr_str)
+
+x = network
