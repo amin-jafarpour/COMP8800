@@ -25,22 +25,22 @@ class Inet:
         net_cidr_str = '.'.join(parts_lst[:3] + ['0']) + '/' + mask_str
         return net_cidr_str
     
-    
-    
-    
-    # def ip_mac_bindings(iface):
-
-    #     print(net_cidr)
+    @staticmethod
+    def get_ip_mac(iface_str):
+        net_cidr_str = Inet.get_net_cidr(iface_str)
+        ip_mac_dict = {}
+        answered, _ = scap.arping(net_cidr_str, verbose=False)
+        for _, received in answered:
+            ip_mac_dict[received.hwsrc] = received.psrc
+        return ip_mac_dict
         
-    #     if cidr == None:
-    #     return None
+        
+   
+    
+   
 
-    #     ip_mac_dict = {}
-    #     answered, _ = arping(cidr, verbose=False)
+    
 
-    #     for _, received in answered:
-    #         ip_mac_dict[received.hwsrc] = received.psrc
-
-    #     return ip_mac_dict
+        
     
 
