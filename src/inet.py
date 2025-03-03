@@ -220,11 +220,15 @@ def extract_fields(structure, field_keys:list, acc:dict=None, duplicates:dict=No
     if isinstance(structure, dict):
         # Traverse key-value pairs of dict,
         for key, value in structure.items():
-            # 
+            # If current key is in `field_keys`,
             if key.lower() in field_keys:
+                # Check whether current key already exists in `acc`,
                 if key.lower() in acc:
+                    # If so, add it to `duplicates` dict starting with count 2
+                    # get(key.lower(), 1) + 1 in case if key intitialy not in dict
                     duplicates[key.lower()] = duplicates.get(key.lower(), 1) + 1
-                    acc[key.lower() + str(duplicates[key.lower()])] = value
+                    # Add field to `acc`
+                    acc[key.lower() + str(duplicates.get(key.lower(), ""))] = value
                 else:
                     acc[key] = value  # Store the value
             extract_fields(value, field_keys, acc, duplicates)  # Recursive call
