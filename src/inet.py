@@ -22,6 +22,10 @@ class Inet:
     
     A class representing Internet.
     """
+    
+    IFACE_MONITOR_MODE:str = 'monitor'
+    IFACE_MANAGED_MODE:str = 'managed'
+    
     @staticmethod
     def get_cidr(iface:str):
         """
@@ -132,13 +136,21 @@ class Inet:
         return layer_fields
 
 
+    @staticmethod
+    def iface_mpde(iface:str, mode:str):
+        """
 
-######################################################################################################
-
-
-
-
-
+        """
+        cmds = [
+            ["sudo", "ip", "link", "set", iface, "down"],
+            ["sudo", "iw", "dev", iface, "set", "type", mode],
+            ["sudo", "ip",  "link", "set", iface, "up"]
+        ]
+        try:
+            for cmd in cmds:
+               subprocess.run(cmd, check=True, text=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error: {e}")
 
 
 
