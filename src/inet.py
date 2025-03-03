@@ -212,6 +212,13 @@ class Inet:
 
 
 def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=None, duplicates:dict=None):
+    """
+    
+    Recursive function traversing nested lists and dictionaries, extracting dictionary key-value pairs 
+    whose key is present in `field_keys`.
+    
+    
+    """
     # if either `acc` or `duplicates` is None, set them to empty dict
     if acc is None:
         acc = {}
