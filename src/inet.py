@@ -209,26 +209,30 @@ class Inet:
 
 
 
-def extract_fields(data, keys, result=None, duplicates={}):
-    #keys = list(map(lambda x: x.lower(), keys))
-    if result is None:
-        result = {}
+def extract_fields(data, keys, acc:dict=None, duplicates:dict=None):
+    # if either `acc` or `duplicates` is None, set them to empty dict
+    if acc is None:
+        acc = {}
+    if duplicates is None:
+        duplicates = {}
 
+    # If structure is a dict, 
     if isinstance(data, dict):
         for key, value in data.items():
             if key.lower() in keys:
-                if key.lower() in result:
+                if key.lower() in acc:
                     duplicates[key.lower()] = duplicates.get(key.lower(), 1) + 1
-                    result[key.lower() + str(duplicates[key.lower()])] = value
+                    acc[key.lower() + str(duplicates[key.lower()])] = value
                 else:
-                    result[key] = value  # Store the value
-            extract_fields(value, keys, result, duplicates)  # Recursive call
+                    acc[key] = value  # Store the value
+            extract_fields(value, keys, acc, duplicates)  # Recursive call
 
+    # If structure is a list, 
     elif isinstance(data, list):
         for item in data:
-            extract_fields(item, keys, result, duplicates)  # Recursive call
+            extract_fields(item, keys, acc, duplicates)  # Recursive call
 
-    return result
+    return acc
 
 
 
