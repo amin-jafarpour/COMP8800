@@ -35,13 +35,17 @@ class Inet:
         :return: CIDR of default gateaway
         :rtype: str
         """
-
-        # runs bash cmd -> ip addr show wlp164s0  | grep -oP 'inet \K[\d.]+/\d+'
+        # Rin bash cmd: ip addr show wlp164s0  | grep -oP 'inet \K[\d.]+/\d+'
         ip_result = subprocess.run(['ip', 'addr', 'show', iface], capture_output=True, text=True)
+        # Split lines of output
         lines = ip_result.stdout.splitlines()
+        # Trim each line of output
         trimmed_lines = list(map(lambda x: x.strip(), lines))
+        # Find lines starting with "inet " token
         items = map(lambda x: x if x.startswith('inet ') else None, trimmed_lines)
+        # Extract the first line match
         inet_line = list(filter(lambda x: x != None, items))[0]
+        # Tokenize the line and extract the second token
         cidr = inet_line.split()[1]
         return cidr
     
@@ -120,19 +124,7 @@ class Inet:
 
 
 
-
-
-
-
-
-
-def process_packet(pkt, discovered_networks, limit):
-   if pkt.haslayer(Dot11) and len(discovered_networks) < limit:
-
-      bssid = pkt[Dot11].addr2
-      if bssid != None and  bssid not in discovered_networks:
-         pkt_info = bundle(pkt)
-         discovered_networks[bssid] = pkt_info
+        
 
 
 
@@ -140,12 +132,13 @@ def process_packet(pkt, discovered_networks, limit):
 
 
 
-def discover_networks(iface:str, limit:int):
-    discovered_networks = {}
-    while (len(discovered_networks) < limit):
-        scap.sniff(iface=iface, count=limit, store=False, prn=lambda pkt: process_packet(pkt, discovered_networks, limit))
-    return discovered_networks
-   
+
+
+
+
+
+
+
     
    
   
