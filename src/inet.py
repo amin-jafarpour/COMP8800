@@ -88,10 +88,15 @@ class Inet:
         :return: MAC-IP bindings where keys are MAC addresses and values are IPv4 addresses associated with MAC addresses. 
         :rtype: dict
         """
+        # Get CIDR address of network
         net_cidr_str = Inet.get_net_cidr(iface)
+        # Stores MAC-IP bindings
         ip_mac:dict = {}
+        # Send ARP request
         answered, _ = scap.arping(net_cidr_str, verbose=False)
+        # For each packet reply received,
         for _, received in answered:
+            # Store MAC-IP binding
             ip_mac[received.hwsrc] = received.psrc
         return ip_mac
         
