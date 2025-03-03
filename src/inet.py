@@ -22,6 +22,8 @@ class Inet:
     
     IFACE_MONITOR_MODE:str = 'monitor'
     IFACE_MANAGED_MODE:str = 'managed'
+    NETWORK_FIEDS:list = ['BSSID', 'addr1', 'addr2', 'addr3', 'country_string', 'num_channels', 
+                       'dBm_AntSignal', 'rates', 'ChannelFrequency', 'rate', 'info']
     
     @staticmethod
     def get_cidr(iface:str):
@@ -209,7 +211,7 @@ class Inet:
 
 
 
-def extract_fields(structure, field_keys:list, acc:dict=None, duplicates:dict=None):
+def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=None, duplicates:dict=None):
     # if either `acc` or `duplicates` is None, set them to empty dict
     if acc is None:
         acc = {}
@@ -232,14 +234,14 @@ def extract_fields(structure, field_keys:list, acc:dict=None, duplicates:dict=No
                 # no index gets appended at the end of field key name
                 acc[key.lower() + str(duplicates.get(key.lower(), ""))] = value
             # Recursive call to get to next inner layer
-            extract_fields(value, field_keys, acc, duplicates) 
+            extract_net_fields(value, field_keys, acc, duplicates) 
 
     # If structure is a list, 
     elif isinstance(structure, list):
         # For each item in list, 
         for item in structure:
             # Recursive call to get to next inner layer
-            extract_fields(item, field_keys, acc, duplicates) 
+            extract_net_fields(item, field_keys, acc, duplicates) 
 
     # If structure is any value other than list or dict or if traversed all layers, return `acc`
     return acc
@@ -256,7 +258,6 @@ def get_network_lst(iface, pkt_count):
         network_lst.append(res)
     change_mode(iface, 'managed')
     return network_lst
-
 
 
         
