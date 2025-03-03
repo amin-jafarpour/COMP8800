@@ -210,57 +210,57 @@ class Inet:
         return discovered_networks
 
 
-@staticmethod
-def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=None, duplicates:dict=None):
-    """
-    
-    Recursive function traversing nested lists and dictionaries, extracting dictionary key-value pairs 
-    whose key is present in `field_keys`.
-    
-    :param structure: A nested dictionary or list containing other dictionaries and list.
-    :param field_keys: A list containing names of fields to extract. 
-    :type field_keys: list
-    :param acc: Dictionary accumulating fields present in `field_keys`
-    :type acc: dict 
-    :param duplicates: Stores count index of duplicates to be appended to duplicate field names.
-    :type duplicates: dict
-    
-    :return: Returns a dictionary of fields indicated by `field_keys` if they are present in `structure`
-    :rtype: dict
-    """
-    # if either `acc` or `duplicates` is None, set them to empty dict
-    if acc is None:
-        acc = {}
-    if duplicates is None:
-        duplicates = {}
+    @staticmethod
+    def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=None, duplicates:dict=None):
+        """
+        
+        Recursive function traversing nested lists and dictionaries, extracting dictionary key-value pairs 
+        whose key is present in `field_keys`.
+        
+        :param structure: A nested dictionary or list containing other dictionaries and list.
+        :param field_keys: A list containing names of fields to extract. 
+        :type field_keys: list
+        :param acc: Dictionary accumulating fields present in `field_keys`
+        :type acc: dict 
+        :param duplicates: Stores count index of duplicates to be appended to duplicate field names.
+        :type duplicates: dict
+        
+        :return: Returns a dictionary of fields indicated by `field_keys` if they are present in `structure`
+        :rtype: dict
+        """
+        # if either `acc` or `duplicates` is None, set them to empty dict
+        if acc is None:
+            acc = {}
+        if duplicates is None:
+            duplicates = {}
 
-    # If structure is a dict, 
-    if isinstance(structure, dict):
-        # Traverse key-value pairs of dict,
-        for key, value in structure.items():
-            # If current key is in `field_keys`,
-            if key.lower() in field_keys:
-                # Check whether current key already exists in `acc`,
-                if key.lower() in acc:
-                    # If so, add it to `duplicates` dict starting with count 2
-                    # get(key.lower(), 1) + 1 in case if key intitialy not in dict
-                    duplicates[key.lower()] = duplicates.get(key.lower(), 1) + 1
-                # Add field to `acc`
-                # duplicates.get(key.lower(), "") so if field occured for first time
-                # no index gets appended at the end of field key name
-                acc[key.lower() + str(duplicates.get(key.lower(), ""))] = value
-            # Recursive call to get to next inner layer
-            extract_net_fields(value, field_keys, acc, duplicates) 
+        # If structure is a dict, 
+        if isinstance(structure, dict):
+            # Traverse key-value pairs of dict,
+            for key, value in structure.items():
+                # If current key is in `field_keys`,
+                if key.lower() in field_keys:
+                    # Check whether current key already exists in `acc`,
+                    if key.lower() in acc:
+                        # If so, add it to `duplicates` dict starting with count 2
+                        # get(key.lower(), 1) + 1 in case if key intitialy not in dict
+                        duplicates[key.lower()] = duplicates.get(key.lower(), 1) + 1
+                    # Add field to `acc`
+                    # duplicates.get(key.lower(), "") so if field occured for first time
+                    # no index gets appended at the end of field key name
+                    acc[key.lower() + str(duplicates.get(key.lower(), ""))] = value
+                # Recursive call to get to next inner layer
+                Inet.extract_net_fields(value, field_keys, acc, duplicates) 
 
-    # If structure is a list, 
-    elif isinstance(structure, list):
-        # For each item in list, 
-        for item in structure:
-            # Recursive call to get to next inner layer
-            extract_net_fields(item, field_keys, acc, duplicates) 
+        # If structure is a list, 
+        elif isinstance(structure, list):
+            # For each item in list, 
+            for item in structure:
+                # Recursive call to get to next inner layer
+                Inet.extract_net_fields(item, field_keys, acc, duplicates) 
 
-    # If structure is any value other than list or dict or if traversed all layers, return `acc`
-    return acc
+        # If structure is any value other than list or dict or if traversed all layers, return `acc`
+        return acc
 
 
     @staticmethod
@@ -285,7 +285,7 @@ def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=N
         # For each network,
         for _, value in net_data.items():
             # Parse network's data gathering only the desired fields
-            fields = extract_net_fields(value)
+            fields = Inet.extract_net_fields(value)
             # Append the network's fields as a dictionary to the list
             net_lst.append(fields)
         return net_lst
