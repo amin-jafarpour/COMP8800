@@ -1,8 +1,24 @@
 # install bluez python3-pybluez bluez-tools
 # sudo systemctl restart bluetooth
-
-
 import bluetooth
+
+
+class BL:
+    @staticmethod
+    def bl_scan(timeout:int):
+        devices = bluetooth.discover_devices(duration=timeout, lookup_names=True, lookup_class=True)
+        if not devices:
+            return []
+        
+        for addr, name, device_class in devices:
+            services = bluetooth.find_service(address=addr)
+            print(addr, name, device_class, type(services))
+
+
+            
+
+
+
 
 def scan_devices():
     print("Scanning for Bluetooth devices...")
@@ -34,8 +50,7 @@ def scan_devices():
         except UnicodeEncodeError:
             print(f"  {addr} - {name.encode('utf-8', 'replace')}")
 
-if __name__ == "__main__":
-    scan_devices()
+
 
 
 
