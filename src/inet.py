@@ -142,21 +142,22 @@ class Inet:
 
 
 
-
-def discover_networks(iface:str, net_count:int):
-    discovered_networks:dict = {}
-    
-    def handle_pkt(pkt, network_acc:dict, net_count:int):
-        if pkt.haslayer(scap.Dot11) and len(network_acc) < net_count:
-            bssid = pkt[scap.Dot11].addr2
-            if bssid != None and  bssid not in network_acc:
-                pkt_data:dict = Inet.layers_fields(pkt)
-                network_acc[bssid] = pkt_data
+    @staticmethod
+    def discover_networks(iface:str, net_count:int):
+        discovered_networks:dict = {}
         
-        
-    while (len(discovered_networks) < net_count):
-        scap.sniff(iface=iface, count=net_count, store=False, prn=lambda pkt: process_packet(pkt, discovered_networks, net_count))
-    return discovered_networks
+        def handle_pkt(pkt, network_acc:dict, net_count:int):
+            if pkt.haslayer(scap.Dot11) and len(network_acc) < net_count:
+                bssid = pkt[scap.Dot11].addr2
+                if bssid != None and  bssid not in network_acc:
+                    pkt_data:dict = Inet.layers_fields(pkt)
+                    network_acc[bssid] = pkt_data
+            
+        while (len(discovered_networks) < net_count):
+            scap.sniff(iface=iface, count=net_count, store=False,
+                    prn=lambda pkt: handle_pkt(pkt, discovered_networks, net_count))
+            
+        return discovered_networks
 
 
 
