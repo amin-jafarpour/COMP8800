@@ -12,7 +12,7 @@ class BL:
         
         for addr, name, device_class in devices:
             services = bluetooth.find_service(address=addr)
-            print(addr, name, device_class, type(services))
+            print(addr, name, device_class, services)
 
 
             
