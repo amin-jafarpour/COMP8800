@@ -139,8 +139,19 @@ class Inet:
     @staticmethod
     def iface_mpde(iface:str, mode:str):
         """
-
+        Puts `iface` network interface adaptor into `mode` mode.
+        
+        :param iface: Name of network interface adaptor to put into `mode` mode.
+        :type iface: str 
+        :param mode: Mode to put `iface` network interface adaptor into.
+        :type mode: str
+        
+        :return: N/A
+        :rtype: None
         """
+        # Runs the following shell cmds:
+        #    sudo ip link set `iface` down
+        #    sudo 
         cmds = [
             ["sudo", "ip", "link", "set", iface, "down"],
             ["sudo", "iw", "dev", iface, "set", "type", mode],
