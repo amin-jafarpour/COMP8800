@@ -6,9 +6,9 @@ import scapy.all as scap
 
 class Inet:
     @staticmethod
-    def get_cidr(iface_str):
+    def get_cidr(iface:str):
         # runs bash cmd -> ip addr show wlp164s0  | grep -oP 'inet \K[\d.]+/\d+'
-        ip_result = subprocess.run(['ip', 'addr', 'show', iface_str], capture_output=True, text=True)
+        ip_result = subprocess.run(['ip', 'addr', 'show', iface], capture_output=True, text=True)
         lines = ip_result.stdout.splitlines()
         trimmed_lines = list(map(lambda x: x.strip(), lines))
         items = map(lambda x: x if x.startswith('inet ') else None, trimmed_lines)
@@ -17,8 +17,8 @@ class Inet:
         return cidr
     
     @staticmethod
-    def get_net_cidr(iface_str):
-        cidr_str = Inet.get_cidr(iface_str)
+    def get_net_cidr(iface:str):
+        cidr_str = Inet.get_cidr(iface)
         parts_lst = cidr_str.split('.')
         last_part = parts_lst[3]
         mask_str = last_part.split('/')[1]
@@ -26,15 +26,16 @@ class Inet:
         return net_cidr_str
     
     @staticmethod
-    def get_ip_mac(iface_str):
-        net_cidr_str = Inet.get_net_cidr(iface_str)
-        ip_mac_dict = {}
+    def get_ip_mac(iface:str):
+        net_cidr_str = Inet.get_net_cidr(iface)
+        ip_mac:dict = {}
         answered, _ = scap.arping(net_cidr_str, verbose=False)
         for _, received in answered:
-            ip_mac_dict[received.hwsrc] = received.psrc
-        return ip_mac_dict
+            ip_mac[received.hwsrc] = received.psrc
+        return ip_mac
         
         
+    
    
     
    
