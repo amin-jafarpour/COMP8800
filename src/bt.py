@@ -10,8 +10,13 @@ class BL:
         if not devices:
             return []
         
+        devices_info = []
         for addr, name, cod in devices:
             services = bluetooth.find_service(address=addr)
+            devices_info.append({'addr': addr, 'name': name, 'cod': cod, 'services': services})
+
+        return devices_info
+
             
 
 
