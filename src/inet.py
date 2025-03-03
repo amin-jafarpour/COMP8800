@@ -211,7 +211,7 @@ class Inet:
 
 
     @staticmethod
-    def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=None, duplicates:dict=None):
+    def extract_net_fields(structure, field_keys:list, acc:dict=None, duplicates:dict=None):
         """
         
         Recursive function traversing nested lists and dictionaries, extracting dictionary key-value pairs 
@@ -285,7 +285,7 @@ class Inet:
         # For each network,
         for _, value in net_data.items():
             # Parse network's data gathering only the desired fields
-            fields = Inet.extract_net_fields(value)
+            fields = Inet.extract_net_fields(value, Inet.NETWORK_FIEDS)
             # Append the network's fields as a dictionary to the list
             net_lst.append(fields)
         return net_lst
