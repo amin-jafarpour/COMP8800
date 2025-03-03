@@ -217,7 +217,16 @@ def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=N
     Recursive function traversing nested lists and dictionaries, extracting dictionary key-value pairs 
     whose key is present in `field_keys`.
     
+    :param structure: A nested dictionary or list containing other dictionaries and list.
+    :param field_keys: A list containing names of fields to extract. 
+    :type field_keys: list
+    :param acc: Dictionary accumulating fields present in `field_keys`
+    :type acc: dict 
+    :param duplicates: Stores count index of duplicates to be appended to duplicate field names.
+    :type duplicates: dict
     
+    :return: Returns a dictionary of fields indicated by `field_keys` if they are present in `structure`
+    :rtype: dict
     """
     # if either `acc` or `duplicates` is None, set them to empty dict
     if acc is None:
