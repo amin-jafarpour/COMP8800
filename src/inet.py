@@ -1,3 +1,15 @@
+"""
+Inet.py
+
+This module provides functionality to interact with Internet. Functionalities such as packet construction, arp scan, network scan
+and such. 
+
+:author: Amin Jafarpour
+:version: 1.0
+:license: GPL
+"""
+
+
 import subprocess 
 import scapy.all as scap 
 
