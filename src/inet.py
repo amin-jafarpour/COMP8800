@@ -15,9 +15,26 @@ import scapy.all as scap
 
 
 
+
+
 class Inet:
+    """
+    
+    A class representing Internet.
+    """
     @staticmethod
     def get_cidr(iface:str):
+        """
+        
+        Returns Classless Inter-Domain Routing (CIDR) address of default gateaway connected to `iface` network interface adaptor.
+        
+        :param iface: Network Interface Adapter Name.
+        :type iface: str
+        
+        :return: CIDR of default gateaway
+        :rtype: str
+        """
+
         # runs bash cmd -> ip addr show wlp164s0  | grep -oP 'inet \K[\d.]+/\d+'
         ip_result = subprocess.run(['ip', 'addr', 'show', iface], capture_output=True, text=True)
         lines = ip_result.stdout.splitlines()
