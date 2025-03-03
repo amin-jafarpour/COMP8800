@@ -136,7 +136,7 @@ class Inet:
 
 
     @staticmethod
-    def iface_mpde(iface:str, mode:str):
+    def iface_mode(iface:str, mode:str):
         """
         Puts `iface` network interface adaptor into `mode` mode.
         
@@ -167,7 +167,7 @@ class Inet:
 
 
     @staticmethod
-    def discover_networks(iface:str, net_count:int):
+    def gather_net_data(iface:str, net_count:int):
         """
         
         Discovers nearby networks reachable and extracts information about such networks. 
@@ -249,15 +249,13 @@ def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=N
 
 
 
-def get_network_lst(iface, pkt_count):
-    change_mode(iface, 'monitor')
-    networks = discover_networks(iface, pkt_count)
-    network_lst = []
-    for key, value in networks.items():
-        res = extract_fields(value, ESSENTIAL_FIEDS)
-        network_lst.append(res)
-    change_mode(iface, 'managed')
-    return network_lst
+def scan_networks(iface:str, net_count:int):
+    net_data = Inet.gather_net_data(iface, net_count)
+    net_lst = []
+    for _, value in net_data.items():
+        fields = extract_net_fields(value)
+        net_lst.append(fields)
+    return net_lst
 
 
         
