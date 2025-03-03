@@ -250,10 +250,24 @@ def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=N
 
 
 def scan_networks(iface:str, net_count:int):
+    """_summary_
+
+    Args:
+        iface (str): _description_
+        net_count (int): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    # Gather data for a total of `net_count` networks
     net_data = Inet.gather_net_data(iface, net_count)
+    # Stores a dictionary for every network keys are field names and values are field values
     net_lst = []
+    # For each network,
     for _, value in net_data.items():
+        # Parse network's data gathering only the desired fields
         fields = extract_net_fields(value)
+        # Append the network's fields as a dictionary to the list
         net_lst.append(fields)
     return net_lst
 
