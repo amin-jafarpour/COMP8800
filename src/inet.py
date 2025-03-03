@@ -94,11 +94,12 @@ def layers_fields(pkt):
     where keys are field names and values are field values of each layer.
  
     :param pkt: Packet
-    :type pkt: Returns dictionary where each key is layer name and each value is  
-               list containing field and field value dictionaries.
-               {"layer": [{"field1": "value1"}, ...], ...}
-
-    Returns:
+    :type pkt: 
+               
+    Returns:Returns dictionary where each key is layer name and each value is  
+            list containing field and field value dictionaries.
+            {"layer": [{"field1": "value1"}, ...], ...}
+            
     :rtype: dict
     """
    # List of all available Layers of packet `pkt`
