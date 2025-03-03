@@ -4,6 +4,8 @@ Inet.py
 This module provides functionality to interact with Internet. Functionalities such as packet construction, arp scan, network scan
 and such. 
 
+NOTE: Only compatiable with Linux and requires `ip` and `iw` Linux commands to work.
+
 :author: Amin Jafarpour
 :version: 1.0
 :license: GPL
@@ -151,7 +153,7 @@ class Inet:
         """
         # Runs the following shell cmds:
         #    sudo ip link set `iface` down
-        #    sudo 
+        #    sudo iw dev 
         cmds = [
             ["sudo", "ip", "link", "set", iface, "down"],
             ["sudo", "iw", "dev", iface, "set", "type", mode],
