@@ -61,10 +61,16 @@ class Inet:
         :return: CIDR of network
         :rtype: str
         """
+        # Fetch default gateaway's address in CIDR notation
         cidr_str = Inet.get_cidr(iface)
+        # Split the address by dot
         parts_lst = cidr_str.split('.')
+        # Extract the first three parts
         last_part = parts_lst[3]
+        # Extract netmask number from fourth part
         mask_str = last_part.split('/')[1]
+        # Reassmble the parts replacing the fourth part by zero and append netmask 
+        # at the end
         net_cidr_str = '.'.join(parts_lst[:3] + ['0']) + '/' + mask_str
         return net_cidr_str
     
