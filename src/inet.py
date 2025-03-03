@@ -86,35 +86,35 @@ class Inet:
         return ip_mac
         
         
-
-def layers_fields(pkt):
-    """
-    Returns dictionary where keys are layer names and values are lists of dictionaries 
-    where keys are field names and values are field values of each layer.
- 
-    :param pkt: Packet
-    :type pkt: 
-               
-    Returns:Returns dictionary where each key is layer name and each value is  
-            list containing field and field value dictionaries.
-            {"layer": [{"field1": "value1"}, ...], ...}
-            
-    :rtype: dict
-    """
-    # List of all available Layers of packet `pkt`
-    layers:list = [layer.__name__ for layer in pkt.layers()]
-    # Dict where key is layer name and value is list of dict where 
-    # key is field name and value is field value
-    layer_fields:dict = {}
-    # For each layer,
-    for layer in layers:
-        # List of dict where key is field name and value is field value.
-        fields_lst:list = []
-        for field in pkt[layer].fields:
-           # For each field of current layer,
-           fields_lst.append({field: pkt[layer].getfieldval(field)})
-        layer_fields[layer] = {layer: fields_lst}
-    return layer_fields
+    @staticmethod
+    def layers_fields(pkt):
+        """
+        Returns dictionary where keys are layer names and values are lists of dictionaries 
+        where keys are field names and values are field values of each layer.
+    
+        :param pkt: Packet
+        :type pkt: 
+                
+        Returns:Returns dictionary where each key is layer name and each value is  
+                list containing field and field value dictionaries.
+                {"layer": [{"field1": "value1"}, ...], ...}
+                
+        :rtype: dict
+        """
+        # List of all available Layers of packet `pkt`
+        layers:list = [layer.__name__ for layer in pkt.layers()]
+        # Dict where key is layer name and value is list of dict where 
+        # key is field name and value is field value
+        layer_fields:dict = {}
+        # For each layer,
+        for layer in layers:
+            # List of dict where key is field name and value is field value.
+            fields_lst:list = []
+            for field in pkt[layer].fields:
+            # For each field of current layer,
+               fields_lst.append({field: pkt[layer].getfieldval(field)})
+            layer_fields[layer] = {layer: fields_lst}
+        return layer_fields
 
 
 
