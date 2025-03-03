@@ -185,7 +185,7 @@ class Inet:
         # Stores BSSID of AP as keys and various layers' fields as values.
         discovered_networks:dict = {}
         # Put `iface` into monitor mode
-        Inet.iface_mpde(iface, Inet.IFACE_MONITOR_MODE)
+        Inet.iface_mode(iface, Inet.IFACE_MONITOR_MODE)
         
         # Inner function to process each packet received
         def handle_pkt(pkt, network_acc:dict, net_count:int):
@@ -206,7 +206,7 @@ class Inet:
                     prn=lambda pkt: handle_pkt(pkt, discovered_networks, net_count))
             
         # Put `iface` back into managed mode
-        Inet.iface_mpde(iface, Inet.IFACE_MANAGED_MODE)
+        Inet.iface_mode(iface, Inet.IFACE_MANAGED_MODE)
         return discovered_networks
 
 
