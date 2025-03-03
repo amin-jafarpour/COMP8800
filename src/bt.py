@@ -10,9 +10,9 @@ class BL:
         if not devices:
             return []
         
-        for addr, name, device_class in devices:
+        for addr, name, cod in devices:
             services = bluetooth.find_service(address=addr)
-            print(addr, name, device_class, services)
+            
 
 
             
