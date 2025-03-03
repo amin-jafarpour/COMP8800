@@ -139,6 +139,7 @@ class Inet:
         Puts `iface` network interface adaptor into `mode` mode.
         
         :param iface: Name of network interface adaptor to put into `mode` mode.
+                      Can be set to `Inet.IFACE_MONITOR_MODE`, `Intet.IFACE_MANAGED_MODE`
         :type iface: str 
         :param mode: Mode to put `iface` network interface adaptor into.
         :type mode: str
