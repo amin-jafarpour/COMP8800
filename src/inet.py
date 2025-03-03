@@ -87,11 +87,50 @@ class Inet:
         
         
 
-   
-    
-   
+def get_layer_fields(pkt):
 
+   # List of all av
+   layers:list = [layer.__name__ for layer in pkt.layers()]
+   layer_fields:dict = {}
+
+   for layer in layers:
+       fields_lst:list = []
+       for field in pkt[layer].fields:
+          fields_lst.append({field: pkt[layer].getfieldval(field)})
+       layer_fields[layer] = {layer: fields_lst}
+   return layer_fields
+
+
+
+
+
+
+
+
+
+def process_packet(pkt, discovered_networks, limit):
+   if pkt.haslayer(Dot11) and len(discovered_networks) < limit:
+
+      bssid = pkt[Dot11].addr2
+      if bssid != None and  bssid not in discovered_networks:
+         pkt_info = bundle(pkt)
+         discovered_networks[bssid] = pkt_info
+
+
+
+
+
+
+
+def discover_networks(iface:str, limit:int):
+    discovered_networks = {}
+    while (len(discovered_networks) < limit):
+        scap.sniff(iface=iface, count=limit, store=False, prn=lambda pkt: process_packet(pkt, discovered_networks, limit))
+    return discovered_networks
+   
     
+   
+  
 
         
     
