@@ -210,7 +210,7 @@ class Inet:
         return discovered_networks
 
 
-
+@staticmethod
 def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=None, duplicates:dict=None):
     """
     
@@ -263,29 +263,34 @@ def extract_net_fields(structure, field_keys:list=Inet.NETWORK_FIEDS, acc:dict=N
     return acc
 
 
+    @staticmethod
+    def scan_networks(iface:str, net_count:int):
+        """
+        
+        Scans neatby networks and returns infomation about them.
+        
+        :param iface: Network interface adaptor to use to scan for networks, which will be put in monitor mode and then
+        back to managed mode. 
+        :type iface: str
+        :param net_count: Number of networks to scan.
+        :type net_count: int
+        
+        :return: A list containing dictionaries where each dictionary represents a networks' information. 
+        :rtype: list
+        """
+        # Gather data for a total of `net_count` networks
+        net_data = Inet.gather_net_data(iface, net_count)
+        # Stores a dictionary for every network keys are field names and values are field values
+        net_lst = []
+        # For each network,
+        for _, value in net_data.items():
+            # Parse network's data gathering only the desired fields
+            fields = extract_net_fields(value)
+            # Append the network's fields as a dictionary to the list
+            net_lst.append(fields)
+        return net_lst
 
 
-def scan_networks(iface:str, net_count:int):
-    """_summary_
-
-    Args:
-        iface (str): _description_
-        net_count (int): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    # Gather data for a total of `net_count` networks
-    net_data = Inet.gather_net_data(iface, net_count)
-    # Stores a dictionary for every network keys are field names and values are field values
-    net_lst = []
-    # For each network,
-    for _, value in net_data.items():
-        # Parse network's data gathering only the desired fields
-        fields = extract_net_fields(value)
-        # Append the network's fields as a dictionary to the list
-        net_lst.append(fields)
-    return net_lst
 
 
         
