@@ -228,6 +228,8 @@ def extract_fields(structure, field_keys:list, acc:dict=None, duplicates:dict=No
                     # get(key.lower(), 1) + 1 in case if key intitialy not in dict
                     duplicates[key.lower()] = duplicates.get(key.lower(), 1) + 1
                     # Add field to `acc`
+                    # duplicates.get(key.lower(), "") so if field occured for first time
+                    # no index gets appended at the end of field key name
                     acc[key.lower() + str(duplicates.get(key.lower(), ""))] = value
                 else:
                     acc[key] = value  # Store the value
