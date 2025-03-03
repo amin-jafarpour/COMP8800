@@ -87,8 +87,20 @@ class Inet:
         
         
 
-def get_layer_fields(pkt):
+def layers_fields(pkt):
+    """
+    
+    Returns dictionary where keys are layer names and values are lists of dictionaries 
+    where keys are field names and values are field values of each layer.
+ 
+    :param pkt: Packet
+    :type pkt: Returns dictionary where each key is layer name and each value is  
+               list containing field and field value dictionaries.
+               {"layer": [{"field1": "value1"}, ...], ...}
 
+    Returns:
+    :rtype: dict
+    """
    # List of all available Layers of packet `pkt`
    layers:list = [layer.__name__ for layer in pkt.layers()]
    # Dict where key is layer name and value is list of dict where 
