@@ -210,8 +210,7 @@ class Inet:
 
 
 def extract_fields(data, keys, result=None, duplicates=0):
-    keys = list(map(lambda x: x.lower(), keys))
-    
+    #keys = list(map(lambda x: x.lower(), keys))
     if result is None:
         result = {}
 
