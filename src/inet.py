@@ -26,7 +26,8 @@ class Inet:
     def get_cidr(iface:str):
         """
         
-        Returns Classless Inter-Domain Routing (CIDR) address of default gateaway connected to `iface` network interface adaptor.
+        Returns Classless Inter-Domain Routing (CIDR) address of default gateaway connected to `iface` 
+        network interface adaptor.
         
         :param iface: Network Interface Adapter Name.
         :type iface: str
@@ -46,6 +47,16 @@ class Inet:
     
     @staticmethod
     def get_net_cidr(iface:str):
+        """
+        
+        Returns Classless Inter-Domain Routing (CIDR) address of network `iface` network interface adaptor is connected to.
+        
+        :param iface: Network Interface Adapter Name.
+        :type iface: str
+        
+        :return: CIDR of network
+        :rtype: str
+        """
         cidr_str = Inet.get_cidr(iface)
         parts_lst = cidr_str.split('.')
         last_part = parts_lst[3]
@@ -55,6 +66,18 @@ class Inet:
     
     @staticmethod
     def get_ip_mac(iface:str):
+        """
+        
+        Returns a dictionary where keys are MAC addresses of devices connected to network and values are
+        IPv4 addresses of devices associated with MAC addresses. 
+        
+
+        :param iface: Network Interface Adapter Name.
+        :type iface: str
+
+        :return: MAC-IP bindings where keys are MAC addresses and values are IPv4 addresses associated with MAC addresses. 
+        :rtype: dict
+        """
         net_cidr_str = Inet.get_net_cidr(iface)
         ip_mac:dict = {}
         answered, _ = scap.arping(net_cidr_str, verbose=False)
@@ -63,7 +86,7 @@ class Inet:
         return ip_mac
         
         
-    
+
    
     
    
