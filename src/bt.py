@@ -3,7 +3,7 @@
 import bluetooth
 
 
-class BL:
+class BT:
     @staticmethod
     def bl_scan(timeout:int):
         devices = bluetooth.discover_devices(duration=timeout, lookup_names=True, lookup_class=True)
