@@ -150,13 +150,17 @@ class Inet:
         def handle_pkt(pkt, network_acc:dict, net_count:int):
             # If received packet has IEEE 802.11 layer and network count has not been reached,
             if pkt.haslayer(scap.Dot11) and len(network_acc) < net_count:
-                # Extract BSSID of sender of packet
+                # Store BSSID of sender of packet
                 bssid = pkt[scap.Dot11].addr2
+                # If BSSID is not none and iff according to BSSID sender is no already recorded,
                 if bssid != None and  bssid not in network_acc:
+                    # Extract fields of packet by packet layers
                     pkt_data:dict = Inet.layers_fields(pkt)
+                    # Store sender's BSSID as key and various layer fields are value
                     network_acc[bssid] = pkt_data
-            
+        # While network count has not been reached,
         while (len(discovered_networks) < net_count):
+            # Sniffing for packets
             scap.sniff(iface=iface, count=net_count, store=False,
                     prn=lambda pkt: handle_pkt(pkt, discovered_networks, net_count))
             
