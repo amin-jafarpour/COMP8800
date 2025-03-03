@@ -227,19 +227,21 @@ def extract_fields(structure, field_keys:list, acc:dict=None, duplicates:dict=No
                     # If so, add it to `duplicates` dict starting with count 2
                     # get(key.lower(), 1) + 1 in case if key intitialy not in dict
                     duplicates[key.lower()] = duplicates.get(key.lower(), 1) + 1
-                    # Add field to `acc`
-                    # duplicates.get(key.lower(), "") so if field occured for first time
-                    # no index gets appended at the end of field key name
-                    acc[key.lower() + str(duplicates.get(key.lower(), ""))] = value
-                else:
-                    acc[key] = value  # Store the value
-            extract_fields(value, field_keys, acc, duplicates)  # Recursive call
+                # Add field to `acc`
+                # duplicates.get(key.lower(), "") so if field occured for first time
+                # no index gets appended at the end of field key name
+                acc[key.lower() + str(duplicates.get(key.lower(), ""))] = value
+            # Recursive call to get to next inner layer
+            extract_fields(value, field_keys, acc, duplicates) 
 
     # If structure is a list, 
     elif isinstance(structure, list):
+        # For each item in list, 
         for item in structure:
-            extract_fields(item, field_keys, acc, duplicates)  # Recursive call
+            # Recursive call to get to next inner layer
+            extract_fields(item, field_keys, acc, duplicates) 
 
+    # If structure is any value other than list or dict or if traversed all layers, return `acc`
     return acc
 
 
