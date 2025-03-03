@@ -133,6 +133,68 @@ class Inet:
 
 
 
+######################################################################################################
+
+
+
+
+
+
+
+
+
+def discover_networks(iface:str, net_count:int):
+    discovered_networks:dict = {}
+    
+    def handle_pkt(pkt, network_acc:dict, net_count:int):
+        if pkt.haslayer(scap.Dot11) and len(network_acc) < net_count:
+            bssid = pkt[scap.Dot11].addr2
+            if bssid != None and  bssid not in network_acc:
+                pkt_data:dict = Inet.layers_fields(pkt)
+                network_acc[bssid] = pkt_data
+        
+        
+    while (len(discovered_networks) < net_count):
+        scap.sniff(iface=iface, count=net_count, store=False, prn=lambda pkt: process_packet(pkt, discovered_networks, net_count))
+    return discovered_networks
+
+
+
+def extract_fields(data, keys, result=None, duplicates=0):
+    keys = list(map(lambda x: x.lower(), keys))
+    
+    if result is None:
+        result = {}
+
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if key.lower() in keys:
+                if key.lower() in result:
+                    duplicates = duplicates + 1
+                    result[key.lower() + str(duplicates)] = value
+                else:
+                    result[key] = value  # Store the value
+            extract_fields(value, keys, result, duplicates)  # Recursive call
+
+    elif isinstance(data, list):
+        for item in data:
+            extract_fields(item, keys, result, duplicates)  # Recursive call
+
+    return result
+
+
+
+
+def get_network_lst(iface, pkt_count):
+    change_mode(iface, 'monitor')
+    networks = discover_networks(iface, pkt_count)
+    network_lst = []
+    for key, value in networks.items():
+        res = extract_fields(value, ESSENTIAL_FIEDS)
+        network_lst.append(res)
+    change_mode(iface, 'managed')
+    return network_lst
+
 
 
         
