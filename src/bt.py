@@ -17,6 +17,10 @@ class BT:
         return devices_info
 
             
+            
+    @staticmethod
+    def advertise():
+        pass
 
 
 
