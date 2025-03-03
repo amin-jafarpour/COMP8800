@@ -146,8 +146,11 @@ class Inet:
     def discover_networks(iface:str, net_count:int):
         discovered_networks:dict = {}
         
+        # Inner function to process each packet received
         def handle_pkt(pkt, network_acc:dict, net_count:int):
+            # If received packet has IEEE 802.11 layer and network count has not been reached,
             if pkt.haslayer(scap.Dot11) and len(network_acc) < net_count:
+                # Extract BSSID of sender of packet
                 bssid = pkt[scap.Dot11].addr2
                 if bssid != None and  bssid not in network_acc:
                     pkt_data:dict = Inet.layers_fields(pkt)
