@@ -209,7 +209,7 @@ class Inet:
 
 
 
-def extract_fields(data, keys, result=None, duplicates=0):
+def extract_fields(data, keys, result=None, duplicates={}):
     #keys = list(map(lambda x: x.lower(), keys))
     if result is None:
         result = {}
@@ -218,8 +218,8 @@ def extract_fields(data, keys, result=None, duplicates=0):
         for key, value in data.items():
             if key.lower() in keys:
                 if key.lower() in result:
-                    duplicates = duplicates + 1
-                    result[key.lower() + str(duplicates)] = value
+                    duplicates[key.lower()] = duplicates.get(key.lower(), 1) + 1
+                    result[key.lower() + str(duplicates[key.lower()])] = value
                 else:
                     result[key] = value  # Store the value
             extract_fields(value, keys, result, duplicates)  # Recursive call
