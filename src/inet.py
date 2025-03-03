@@ -11,13 +11,8 @@ NOTE: Only compatiable with Linux and requires `ip` and `iw` Linux commands to w
 :license: GPL
 """
 
-
 import subprocess 
 import scapy.all as scap 
-
-
-
-
 
 class Inet:
     """
@@ -153,7 +148,8 @@ class Inet:
         """
         # Runs the following shell cmds:
         #    sudo ip link set `iface` down
-        #    sudo iw dev 
+        #    sudo iw dev dev `iface` set type `mode`
+        #    sudo ip link set `iface` up
         cmds = [
             ["sudo", "ip", "link", "set", iface, "down"],
             ["sudo", "iw", "dev", iface, "set", "type", mode],
