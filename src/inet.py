@@ -110,7 +110,7 @@ class Inet:
         :param pkt: Packet
         :type pkt: 
                 
-        Returns:Returns dictionary where each key is layer name and each value is  
+        :return:Returns dictionary where each key is layer name and each value is  
                 list containing field and field value dictionaries.
                 {"layer": [{"field1": "value1"}, ...], ...}
                 
@@ -144,6 +144,20 @@ class Inet:
 
     @staticmethod
     def discover_networks(iface:str, net_count:int):
+        """
+        
+        Discovers nearby networks reachable and extracts information about such networks. 
+        NOTE: The given `iface` network interface card must support monitor mode and is
+              put into monitor mode while sniffing for packets. 
+        
+        :param iface: Name of metwork interface card name to sniff from.
+        :type iface: str
+        :param net_count: Number of networks to discover. 
+        :type net_count: int
+        
+        :return: Returns dictionary where keys are BSSID of network AP and values are
+                 various layers' fields. 
+        """
         discovered_networks:dict = {}
         
         # Inner function to process each packet received
