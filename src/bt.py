@@ -15,6 +15,11 @@ class BT:
             services = bluetooth.find_service(address=addr)
             devices_info.append({'addr': addr, 'name': name, 'cod': cod, 'services': services})
         return devices_info
+    
+    
+    @staticmethod
+    def dummy():
+        pass
 
           
           
