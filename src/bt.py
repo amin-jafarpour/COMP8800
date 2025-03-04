@@ -4,6 +4,8 @@
 import bluetooth
 import time 
 
+#  Paused reading here -> https://github.com/pybluez/pybluez/tree/master/examples/advanced
+
 
 class BT:
     @staticmethod
