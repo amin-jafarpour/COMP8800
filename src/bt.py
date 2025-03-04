@@ -1,6 +1,7 @@
 # install bluez python3-pybluez bluez-tools
 # sudo systemctl restart bluetooth
 import bluetooth
+import time 
 
 
 class BT:
@@ -89,6 +90,20 @@ class BT:
            print("    svc classes:", svc["service-classes"])
            print("    profiles:   ", svc["profiles"])
            print("    service id: ", svc["service-id"])
+ 
+ 
+    @staticmethod
+    def ble_beacon():
+        service = bluetooth.ble.BeaconService()
+        service.start_advertising("11111111-2222-3333-4444-555555555555",1, 1, 1, 200)
+        time.sleep(15)
+        service.stop_advertising()
+        print("Done.")
+        
+ 
+ 
+ 
+ 
             
           
 # Client:   
