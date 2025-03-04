@@ -103,11 +103,11 @@ class BT:
         
     @staticmethod
     def ble_becan_scan():
-    service = BeaconService()
-    devices = service.scan(2)
-    for address, data in list(devices.items()):
-        print(data, address)
-    print("Done.")
+        service = bluetooth.ble.BeaconService()
+        devices = service.scan(2)
+        for address, data in list(devices.items()):
+            print(data, address)
+        print("Done.")
         
  
  
