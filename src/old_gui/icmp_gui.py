@@ -2,7 +2,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from response_scrollable_gui import ResponseScrollableWindow
+from old_gui.response_scrollable_gui import ResponseScrollableWindow
 
 
 # --- Attempt to import Scapy ---

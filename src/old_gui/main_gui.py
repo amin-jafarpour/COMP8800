@@ -21,11 +21,11 @@ from gi.repository import Gtk
 #     has_scapy = False
 
 
-from ether_gui import EthernetWindow
-from tcp_gui import TCPPacketWindow
-from udp_gui import UDPPacketWindow
-from ip_gui import IPPacketWindow
-from icmp_gui import ICMPPacketWindow
+from old_gui.ether_gui import EthernetWindow
+from old_gui.tcp_gui import TCPPacketWindow
+from old_gui.udp_gui import UDPPacketWindow
+from old_gui.ip_gui import IPPacketWindow
+from old_gui.icmp_gui import ICMPPacketWindow
 
 
 
