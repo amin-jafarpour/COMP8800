@@ -9,7 +9,7 @@ import time
 
 class BT:
     @staticmethod
-    def bt_scan(timeout:int):
+    def device_scan(timeout:int):
         devices = bluetooth.discover_devices(duration=timeout, lookup_names=True, flush_cache=True, lookup_class=True)
         if not devices:
             return []
