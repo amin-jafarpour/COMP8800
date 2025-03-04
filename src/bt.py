@@ -6,7 +6,7 @@ import bluetooth
 class BT:
     @staticmethod
     def bt_scan(timeout:int):
-        devices = bluetooth.discover_devices(duration=timeout, lookup_names=True, lookup_class=True)
+        devices = bluetooth.discover_devices(duration=timeout, lookup_names=True, lush_cache=True, lookup_class=True)
         if not devices:
             return []
         
@@ -18,10 +18,25 @@ class BT:
     
     
     @staticmethod
-    def dummy():
-        pass
+    def l2capserver():    
+        server_sock = bluetooth.BluetoothSocket(bluetooth.L2CAP)
+        port = 0x1001
+        server_sock.bind(("", port))
+        server_sock.listen(1)
+        uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ef"
+        bluetooth.advertise_service(server_sock, "SampleServerL2CAP", service_id=uuid, service_classes = [uuid])
+        client_sock, address = server_sock.accept()
+        print("Accepted connection from", address)
+        data = client_sock.recv(1024)
+        print("Data received:", str(data))
+        while data:
+            client_sock.send("Echo =>", str(data))
+            data = client_sock.recv(1024)
+            print("Data received:", str(data))
+        client_sock.close()
+        server_sock.close()    
+        
 
-          
           
           
           
