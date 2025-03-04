@@ -110,6 +110,15 @@ class BT:
         print("Done.")
         
  
+    @staticmethod
+    def gatt(address):
+        # Generic Attribute Profile
+        requester = bluetooth.ble.GATTRequester(address, False)
+        requester.connect(True)
+        res = requester.read_by_uuid("00002a00-0000-1000-8000-00805f9b34fb")
+        print(res)
+
+ 
  
  
  
