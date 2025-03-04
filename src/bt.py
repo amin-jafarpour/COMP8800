@@ -117,6 +117,14 @@ class BT:
         requester.connect(True)
         res = requester.read_by_uuid("00002a00-0000-1000-8000-00805f9b34fb")
         print(res)
+        
+    def ble_service_scan():
+        discovery = bluetooth.ble.DiscoveryService()
+        devices = discovery.discover(2)
+        for address, name in devices.items():
+            print("Name: {}, address: {}".format(name, address))
+        
+        
 
  
  
