@@ -1,5 +1,6 @@
 # install bluez python3-pybluez bluez-tools
 # sudo systemctl restart bluetooth
+# pip install pybluez gattlib
 import bluetooth
 import time 
 
@@ -93,12 +94,20 @@ class BT:
  
  
     @staticmethod
-    def ble_beacon():
+    def send_ble_beacon():
         service = bluetooth.ble.BeaconService()
         service.start_advertising("11111111-2222-3333-4444-555555555555",1, 1, 1, 200)
         time.sleep(15)
         service.stop_advertising()
         print("Done.")
+        
+    @staticmethod
+    def ble_becan_scan():
+    service = BeaconService()
+    devices = service.scan(2)
+    for address, data in list(devices.items()):
+        print(data, address)
+    print("Done.")
         
  
  
