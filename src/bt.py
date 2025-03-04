@@ -24,7 +24,7 @@ class BT:
         server_sock.bind(("", bluetooth.PORT_ANY)) 
         server_sock.listen(1)
         port = server_sock.getsockname()[1]
-        host_mac = bluetooth.read_local_bdaddr()[0]
+        #host_mac = bluetooth.read_local_bdaddr()[0]
         service_uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee" 
         bluetooth.advertise_service(
         server_sock, "MyBluetoothService",
@@ -37,6 +37,11 @@ class BT:
         client_sock.close()
         server_sock.close()
         
+    
+    @staticmethod 
+    def dummy():
+        
+
         
 
         
