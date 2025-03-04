@@ -75,7 +75,21 @@ class BT:
         print("All done.")
         
 
-          
+
+    @staticmethod
+    def sdp_browse(addr=None):
+       services = bluetooth.find_service(address=addr) # None address for all devices
+       for svc in services:
+           print("\nService Name:", svc["name"])
+           print("    Host:       ", svc["host"])
+           print("    Description:", svc["description"])
+           print("    Provided By:", svc["provider"])
+           print("    Protocol:   ", svc["protocol"])
+           print("    channel/PSM:", svc["port"])
+           print("    svc classes:", svc["service-classes"])
+           print("    profiles:   ", svc["profiles"])
+           print("    service id: ", svc["service-id"])
+            
           
 # Client:   
 # service_matches = bluetooth.find_service(uuid=uuid, address=addr)
