@@ -1,9 +1,6 @@
-
-# pip install pybluez gattlib
+# Special Thanks to https://github.com/pybluez/pybluez/tree/master/examples/
 import bluetooth
 import time 
-
-#  Paused reading here -> https://github.com/pybluez/pybluez/tree/master/examples/advanced
 
 
 class BT:
