@@ -1,5 +1,4 @@
-# install bluez python3-pybluez bluez-tools
-# sudo systemctl restart bluetooth
+
 # pip install pybluez gattlib
 import bluetooth
 import time 
