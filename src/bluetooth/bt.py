@@ -17,7 +17,10 @@ class BT:
         devices_info= []
         for addr, name, cod in devices:
 
-            #(name=None, uuid=None, address=None)
+            # find_service(name=None, uuid=None, address=None):
+            #   names: friendly name of the device.
+            #   uuid: 16-bit or 128-bit UUID.
+            #   address: 6 byte BD_ADDR (Bluetooth Device Address).
             services = bluetooth.find_service(name=name, address=addr)
             services = []
             devices_info.append({'addr': addr, 'name': name, 'cod': cod, 'services': services})
