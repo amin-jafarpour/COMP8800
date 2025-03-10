@@ -10,7 +10,7 @@ from bt_pkg.bt import BT
 from inet_pkg.inet import Inet 
 
 
-# Inet.scan_networks(iface:str, net_count:int)
+
 
 
 print(Inet.scan_networks)
@@ -27,7 +27,11 @@ def get_bluetooth_scan():
 
 @app.route('/api/inet/net/scan', methods=['GET'])
 def get_inet_net_scan():
-    return "heeey"
+    # Inet.scan_networks(iface:str, net_count:int)
+    # http://127.0.0.1:5000//api/inet/net/scan?iface=wlp164s0&net_count=5
+    iface = request.args.get('iface', default='', type=str)
+    net_count = request.args.get('net_count', default=1, type=int)
+    return Inet.scan_networks(iface, net_count)
 
 
 
