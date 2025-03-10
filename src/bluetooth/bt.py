@@ -93,23 +93,6 @@ class BT:
         client_sock.close()
         server_sock.close()
         print("All done.")
-        
-
-
-    @staticmethod
-    def sdp_browse(addr=None):
-       services = bluetooth.find_service(address=addr) # None address for all devices
-       for svc in services:
-           print("\nService Name:", svc["name"])
-           print("    Host:       ", svc["host"])
-           print("    Description:", svc["description"])
-           print("    Provided By:", svc["provider"])
-           print("    Protocol:   ", svc["protocol"])
-           print("    channel/PSM:", svc["port"])
-           print("    svc classes:", svc["service-classes"])
-           print("    profiles:   ", svc["profiles"])
-           print("    service id: ", svc["service-id"])
- 
  
     @staticmethod
     def send_ble_beacon():
