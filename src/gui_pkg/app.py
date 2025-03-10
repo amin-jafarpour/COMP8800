@@ -28,7 +28,7 @@ def get_bluetooth_scan():
 @app.route('/api/inet/net/scan', methods=['GET'])
 def get_inet_net_scan():
     # Inet.scan_networks(iface:str, net_count:int)
-    # http://127.0.0.1:5000/api/inet/net/scan?iface=wlp164s0&net_count=5
+    # http://127.0.0.1:5000/api/inet/net/scan?iface=wlx000f00a3857a&net_count=5
     iface = request.args.get('iface', default='', type=str)
     net_count = request.args.get('net_count', default=1, type=int)
     return Inet.scan_networks(iface, net_count)
