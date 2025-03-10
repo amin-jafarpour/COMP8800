@@ -13,7 +13,6 @@ from inet_pkg.inet import Inet
 
 
 
-print(Inet.scan_networks)
 
 # render_template: Used to serve the markdown files. 
 # request: Allows access to client request packet parameters. 
@@ -23,7 +22,9 @@ app = Flask(__name__)
 
 @app.route('/api/bluetooth/scan', methods=['GET'])
 def get_bluetooth_scan():
-    return BT.device_scan(10)
+    # http://127.0.0.1:5000/api/bluetooth/scan?duration
+    duration = request.args.get('duration', default=1, type=int)
+    return BT.device_scan(duration)
 
 @app.route('/api/inet/net/scan', methods=['GET'])
 def get_inet_net_scan():
@@ -34,6 +35,7 @@ def get_inet_net_scan():
     net_lst = Inet.scan_networks(iface, net_count)
     # BUG: Bytes decoding has issues. Fix it!
     # v.decode(encoding='utf-32-be', errors='ignore')
+    print(net_lst)
     return [{k: (f'{v}' if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
 
 
