@@ -1,18 +1,18 @@
-# Special Thanks to https://github.com/pybluez/pybluez/tree/master/examples/
+# Special thanks to https://github.com/pybluez/pybluez/tree/master/examples/
 import bluetooth
 import time 
 
 
 class BT:
     @staticmethod
-    def device_scan(timeout:int):
-        devices = bluetooth.discover_devices(duration=timeout, lookup_names=True, lookup_class=True) # flush_cache=True
+    def device_scan(duration:int):
+        devices = bluetooth.discover_devices(duration=duration, lookup_names=True, lookup_class=True, flush_cache=True) 
         if not devices:
             return []
-        
-        devices_info = []
+        devices_info= []
         for addr, name, cod in devices:
-            services = bluetooth.find_service(address=addr)
+            #services = bluetooth.find_service(address=addr)
+            services = []
             devices_info.append({'addr': addr, 'name': name, 'cod': cod, 'services': services})
         return devices_info
     
