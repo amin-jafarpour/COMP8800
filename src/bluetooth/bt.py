@@ -16,7 +16,6 @@ class BT:
             return []
         devices_info= []
         for addr, name, cod in devices:
-
             # find_service(name=None, uuid=None, address=None):
             #   names: friendly name of the device.
             #   uuid: 16-bit or 128-bit UUID.
@@ -36,6 +35,8 @@ class BT:
             devices_info.append({'addr': addr, 'name': name, 'cod': cod, 'services': services})
         return devices_info
     
+
+
 
 
 ########################################################################################################
