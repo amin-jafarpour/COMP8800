@@ -1,8 +1,8 @@
 # Make other project packages visible by adding the
 # parent directory of all packages to python's path.
-from pathlib import Path
+import pathlib 
 import sys
-sys.path.append(str(Path.cwd().parent))
+sys.path.append(str(pathlib.Path.cwd().parent))
 
 from flask import Flask, render_template, request, jsonify
 
