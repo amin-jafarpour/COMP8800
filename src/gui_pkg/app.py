@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from ..bt import device_scan
+import bt_pkg.bt 
 # render_template: Used to serve the markdown files. 
 # request: Allows access to client request packet parameters. 
 # jsonify: Allows to define an API.
