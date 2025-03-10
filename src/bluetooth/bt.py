@@ -11,7 +11,7 @@ class BT:
             return []
         devices_info= []
         for addr, name, cod in devices:
-            #services = bluetooth.find_service(address=addr)
+            services = bluetooth.find_service(address=addr)
             services = []
             devices_info.append({'addr': addr, 'name': name, 'cod': cod, 'services': services})
         return devices_info
