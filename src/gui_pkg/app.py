@@ -33,7 +33,8 @@ def get_inet_net_scan():
     net_count = request.args.get('net_count', default=1, type=int)
     net_lst = Inet.scan_networks(iface, net_count)
     # BUG: Bytes decoding has issues. Fix it!
-    return [{k: (v.decode(encoding='utf-32-be', errors='ignore') if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
+    # v.decode(encoding='utf-32-be', errors='ignore')
+    return [{k: (f'{v}' if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
 
 
 
