@@ -9,7 +9,7 @@ class BT:
         # discover_devices(duration, lookup_names, lookup_class):
         #   lookup_names: Find name of each discovered device. 
         #   lookup_class: Find class of each discovered device. 
-        #   Returns a list of (address, name, class) tuples.  
+        #   Returns a list of (address, name, class) tuples, where CoD is Class of Device.
         devices = bluetooth.discover_devices(duration=duration, lookup_names=True, 
         lookup_class=True) 
         if not devices:
