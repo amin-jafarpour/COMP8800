@@ -6,12 +6,19 @@ import time
 class BT:
     @staticmethod
     def device_scan(duration:int):
-        devices = bluetooth.discover_devices(duration=duration, lookup_names=True, lookup_class=True, flush_cache=True) 
+        # discover_devices(duration, lookup_names, lookup_class):
+        #   lookup_names: Find name of each discovered device. 
+        #   lookup_class: Find class of each discovered device. 
+        #   Returns a list of (address, name, class) tuples.  
+        devices = bluetooth.discover_devices(duration=duration, lookup_names=True, 
+        lookup_class=True) 
         if not devices:
             return []
         devices_info= []
         for addr, name, cod in devices:
-            services = bluetooth.find_service(address=addr)
+
+            #(name=None, uuid=None, address=None)
+            services = bluetooth.find_service(name=name, address=addr)
             services = []
             devices_info.append({'addr': addr, 'name': name, 'cod': cod, 'services': services})
         return devices_info
