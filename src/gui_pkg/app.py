@@ -29,11 +29,10 @@ def get_bluetooth_scan():
 
 @app.route('/api/inet/net/scan', methods=['GET'])
 def get_inet_net_scan():
-    # Inet.scan_networks(iface:str, net_count:int)
-    # http://127.0.0.1:5000/api/inet/net/scan?iface=wlx000f00a3857a&net_count=5
+    # http://127.0.0.1:5000/api/inet/net/scan?iface=wlx000f00a3857a&timeout=5
     iface = request.args.get('iface', default='', type=str)
-    net_count = request.args.get('net_count', default=1, type=int)
-    net_lst = Inet.scan_networks(iface, net_count)
+    timeout = request.args.get('timeout', default=1, type=int)
+    net_lst = Inet.scan_networks(iface, 20, timeout)
     # BUG: Bytes decoding has issues. Fix it!
     # v.decode(encoding='utf-32-be', errors='ignore')
     print(net_lst)

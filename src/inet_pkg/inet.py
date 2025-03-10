@@ -167,7 +167,7 @@ class Inet:
 
 
     @staticmethod
-    def gather_net_data(iface:str, net_count:int):
+    def gather_net_data(iface:str, net_count:int, timeout:int):
         """
         
         Discovers nearby networks reachable and extracts information about such networks. 
@@ -177,6 +177,8 @@ class Inet:
         :param iface: Name of metwork interface card name to sniff from.
         :type iface: str
         :param net_count: Number of networks to discover. 
+        :param timeout: timeout in seconds after which it stops sniffing packets. 
+        :type timeout: int
         :type net_count: int
         
         :return: Returns dictionary where keys are BSSID of network AP and values are
@@ -202,7 +204,7 @@ class Inet:
         # While network count has not been reached,
         while (len(discovered_networks) < net_count):
             # Sniffing for packets
-            scap.sniff(iface=iface, count=net_count, store=False,
+            scap.sniff(iface=iface, timeout=timeout, count=net_count, store=False,
                     prn=lambda pkt: handle_pkt(pkt, discovered_networks, net_count))
             
         # Put `iface` back into managed mode
@@ -264,7 +266,7 @@ class Inet:
 
 
     @staticmethod
-    def scan_networks(iface:str, net_count:int):
+    def scan_networks(iface:str, net_count:int, timeout:int):
         """
         
         Scans neatby networks and returns infomation about them.
@@ -274,12 +276,14 @@ class Inet:
         :type iface: str
         :param net_count: Number of networks to scan.
         :type net_count: int
+        :param timeout: timeout in seconds after which it stops sniffing packets. 
+        :type timeout: int
         
         :return: A list containing dictionaries where each dictionary represents a networks' information. 
         :rtype: list
         """
         # Gather data for a total of `net_count` networks
-        net_data = Inet.gather_net_data(iface, net_count)
+        net_data = Inet.gather_net_data(iface, net_count, timeout)
         # Stores a dictionary for every network keys are field names and values are field values
         net_lst = []
         # For each network,
