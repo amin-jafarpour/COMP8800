@@ -21,7 +21,10 @@ class BT:
             #   names: friendly name of the device.
             #   uuid: 16-bit or 128-bit UUID.
             #   address: 6 byte BD_ADDR (Bluetooth Device Address).
-            #   Returns a list of dictionaries: 
+            #   Returns a list of dictionaries: {
+            #       
+            #
+            #       }
             services = bluetooth.find_service(name=name, address=addr)
             services = []
             devices_info.append({'addr': addr, 'name': name, 'cod': cod, 'services': services})
