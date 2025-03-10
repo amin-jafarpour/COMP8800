@@ -18,11 +18,10 @@ app = Flask(__name__)
 
 @app.route('/api/bluetooth/scan', methods=['GET'])
 def get_bluetooth_scan():
-
-    return ['heeey']
-
+    return bt_pkg.bt.device_scan()
 
 
-# if __name__ == '__main__':
-#     # Starts the development server with debugging enabled.
-#     app.run(debug=True)
+
+if __name__ == '__main__':
+    # Starts the development server with debugging enabled.
+    app.run(debug=True)
