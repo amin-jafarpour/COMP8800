@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 # render_template: Used to serve the markdown files. 
 # request: Allows access to client request packet parameters. 
-
+# jsonify: Allows to define an API.
 # Initializes the Flask application.
 app = Flask(__name__)
 
@@ -19,6 +19,10 @@ def form():
 def submit():
     name = request.form['name']
     return f"Hello, {name}!"
+
+@app.route('/api/names', methods=['GET'])
+def get_names():
+    return jsonify(['Sam', 'Jason', 'James', 'Ali', 'Nicky'])
 
 
 
