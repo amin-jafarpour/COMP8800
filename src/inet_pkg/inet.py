@@ -202,9 +202,11 @@ class Inet:
                     # Store sender's BSSID as key and various layer fields are value
                     network_acc[bssid] = pkt_data
         # While network count has not been reached,
-        while (len(discovered_networks) < net_count):
+        # while (len(discovered_networks) < net_count):
             # Sniffing for packets
-            scap.sniff(iface=iface, timeout=timeout, count=net_count, store=False,
+            # scap.sniff(iface=iface, timeout=timeout, count=net_count, store=False,
+            #         prn=lambda pkt: handle_pkt(pkt, discovered_networks, net_count))
+        scap.sniff(iface=iface, timeout=timeout, count=net_count, store=False,
                     prn=lambda pkt: handle_pkt(pkt, discovered_networks, net_count))
             
         # Put `iface` back into managed mode
