@@ -5,14 +5,15 @@ from flask import Flask, render_template, request
 # Initializes the Flask application.
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/file')
-def index():
-    return render_template('form.html')
 
+@app.route('/form')
+def form():
+    return render_template('form.html')
 
 @app.route('/submit', methods=['POST'])
 def submit():
