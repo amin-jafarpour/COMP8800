@@ -31,7 +31,8 @@ def get_inet_net_scan():
     # http://127.0.0.1:5000/api/inet/net/scan?iface=wlx000f00a3857a&net_count=5
     iface = request.args.get('iface', default='', type=str)
     net_count = request.args.get('net_count', default=1, type=int)
-    return Inet.scan_networks(iface, net_count)
+    net_lst = Inet.scan_networks(iface, net_count)
+    return [{k: (v.decode() if isinstance(v, bytes) else v) for k, v in d.items()} for d in lst]
 
 
 
