@@ -28,7 +28,8 @@ class BT:
             #       protocol: RFCOMM, L2CAP, or UNKNOWN.
             #       port: RFCOMM channel number for RFCOMM or L2CAP PSM number for L2CAP or None for UNKNOWN.
             #       service-classes: list of UUID strings.
-            #
+            #       profiles: list of profiles, profile = (UUID, version) tuple.
+            #       service-id: The Service ID of the service.
             #       }
             services = bluetooth.find_service(name=name, address=addr)
             services = []
