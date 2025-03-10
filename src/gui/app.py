@@ -1,14 +1,15 @@
-from flask import Flask
+from flask import Flask, render_template
 
 # Initializes the Flask application.
 app = Flask(__name__)
 
 @app.route('/')
-def home():
-    return "Hello, Flask!"
+def index():
+    # Serve the markdown file specified. 
+    return render_template('index.html')!"
 
 
-    
+
 
 if __name__ == '__main__':
     # Starts the development server with debugging enabled.
