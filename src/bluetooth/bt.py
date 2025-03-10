@@ -22,7 +22,12 @@ class BT:
             #   uuid: 16-bit or 128-bit UUID.
             #   address: 6 byte BD_ADDR (Bluetooth Device Address).
             #   Returns a list of dictionaries: {
-            #       
+            #       host: addr of host.
+            #       name: ame of the service being advertised.
+            #       description: description of service.
+            #       protocol: RFCOMM, L2CAP, or UNKNOWN.
+            #       port: RFCOMM channel number for RFCOMM or L2CAP PSM number for L2CAP.
+            #
             #
             #       }
             services = bluetooth.find_service(name=name, address=addr)
