@@ -32,7 +32,7 @@ class BT:
             #       }
             services = bluetooth.find_service(name=name, address=addr)
             services = []
-            devices_info.append({'addr': addr, 'name': name, 'cod': BT.interpret_cod(cod), 'services': services})
+            devices_info.append({'addr': addr, 'name': name, 'cod': cod,'cod_names': BT.interpret_cod(cod), 'services': services})
         return devices_info
     
 
