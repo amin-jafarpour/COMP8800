@@ -6,7 +6,8 @@ sys.path.append(str(pathlib.Path.cwd().parent))
 
 from flask import Flask, render_template, request, jsonify
 
-import bt_pkg.bt 
+import bt_pkg.bt.BT
+ 
 
 
 
@@ -18,7 +19,7 @@ app = Flask(__name__)
 
 @app.route('/api/bluetooth/scan', methods=['GET'])
 def get_bluetooth_scan():
-    return bt_pkg.bt.BT.device_scan(10)
+    return BT.device_scan(10)
 
 
 
