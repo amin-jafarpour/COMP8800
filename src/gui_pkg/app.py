@@ -25,6 +25,11 @@ app = Flask(__name__)
 def get_bluetooth_scan():
     return BT.device_scan(10)
 
+@app.route('/api/inet/net/scan', methods=['GET'])
+def get_inet_net_scan():
+    return "heeey"
+
+
 
 
 if __name__ == '__main__':
