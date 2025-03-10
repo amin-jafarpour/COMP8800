@@ -4,9 +4,9 @@ import pathlib
 import sys
 sys.path.append(str(pathlib.Path.cwd().parent))
 
+# Import necessary modules  
 from flask import Flask, render_template, request, jsonify
-
-import bt_pkg.bt.BT
+from bt_pkg.bt import BT
  
 
 
