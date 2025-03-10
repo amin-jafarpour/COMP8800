@@ -7,9 +7,13 @@ sys.path.append(str(pathlib.Path.cwd().parent))
 # Import necessary modules  
 from flask import Flask, render_template, request, jsonify
 from bt_pkg.bt import BT
- 
+from inet_pkg.inet import Inet 
 
 
+# Inet.scan_networks(iface:str, net_count:int)
+
+
+print(Inet.scan_networks)
 
 # render_template: Used to serve the markdown files. 
 # request: Allows access to client request packet parameters. 
