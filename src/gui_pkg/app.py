@@ -32,7 +32,7 @@ def get_inet_net_scan():
     iface = request.args.get('iface', default='', type=str)
     net_count = request.args.get('net_count', default=1, type=int)
     net_lst = Inet.scan_networks(iface, net_count)
-    return [{k: (v.decode() if isinstance(v, bytes) else v) for k, v in d.items()} for d in lst]
+    return [{k: (v.decode() if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
 
 
 
