@@ -22,7 +22,7 @@ app = Flask(__name__)
 
 @app.route('/api/bluetooth/scan', methods=['GET'])
 def get_bluetooth_scan():
-    # http://127.0.0.1:5000/api/bluetooth/scan?duration
+    # http://127.0.0.1:5000/api/bluetooth/scan?duration=5
     duration = request.args.get('duration', default=1, type=int)
     return BT.device_scan(duration)
 
