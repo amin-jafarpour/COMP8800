@@ -1,12 +1,14 @@
-from flask import Flask, render_template, request, jsonify
-import sys
+# Make other project packages visible by adding the
+# parent directory of all packages to python's path.
 from pathlib import Path
-sys.path.append(Path.cwd().parent)
+import sys
+sys.path.append(str(Path.cwd().parent))
+
+from flask import Flask, render_template, request, jsonify
+
 import bt_pkg.bt 
 
 
-
-print(sys.path)
 
 # render_template: Used to serve the markdown files. 
 # request: Allows access to client request packet parameters. 
