@@ -190,9 +190,10 @@ class Inet:
         Inet.iface_mode(iface, Inet.IFACE_MONITOR_MODE)
         
         # Inner function to process each packet received
-        def handle_pkt(pkt, network_acc:dict, net_count:int):
+        def handle_pkt(pkt, network_acc:dict):
             # If received packet has IEEE 802.11 layer and network count has not been reached,
-            if pkt.haslayer(scap.Dot11) and len(network_acc) < net_count:
+            # if pkt.haslayer(scap.Dot11) and len(network_acc) < net_count:
+            if pkt.haslayer(scap.Dot11):
                 # Store BSSID of sender of packet
                 bssid = pkt[scap.Dot11].addr2
                 # If BSSID is not none and iff according to BSSID sender is no already recorded,
@@ -207,7 +208,7 @@ class Inet:
             # scap.sniff(iface=iface, timeout=timeout, count=net_count, store=False,
             #         prn=lambda pkt: handle_pkt(pkt, discovered_networks, net_count))
         scap.sniff(iface=iface, timeout=timeout, count=net_count, store=False,
-                    prn=lambda pkt: handle_pkt(pkt, discovered_networks, net_count))
+                    prn=lambda pkt: handle_pkt(pkt, discovered_networks))
             
         # Put `iface` back into managed mode
         Inet.iface_mode(iface, Inet.IFACE_MANAGED_MODE)

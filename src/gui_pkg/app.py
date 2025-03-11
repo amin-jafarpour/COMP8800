@@ -36,7 +36,6 @@ def get_inet_net_scan():
     net_lst = Inet.scan_networks(iface, net_count, timeout)
     # BUG: Bytes decoding has issues. Fix it!
     # v.decode(encoding='utf-32-be', errors='ignore')
-    print(net_lst)
     return [{k: (f'{v}' if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
 
 
