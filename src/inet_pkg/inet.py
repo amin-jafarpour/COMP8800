@@ -191,8 +191,7 @@ class Inet:
         
         # Inner function to process each packet received
         def handle_pkt(pkt, network_acc:dict):
-            # If received packet has IEEE 802.11 layer and network count has not been reached,
-            # if pkt.haslayer(scap.Dot11) and len(network_acc) < net_count:
+            # If received packet has IEEE 802.11 layer,
             if pkt.haslayer(scap.Dot11):
                 # Store BSSID of sender of packet
                 bssid = pkt[scap.Dot11].addr2
@@ -202,11 +201,7 @@ class Inet:
                     pkt_data:dict = Inet.layers_fields(pkt)
                     # Store sender's BSSID as key and various layer fields are value
                     network_acc[bssid] = pkt_data
-        # While network count has not been reached,
-        # while (len(discovered_networks) < net_count):
-            # Sniffing for packets
-            # scap.sniff(iface=iface, timeout=timeout, count=net_count, store=False,
-            #         prn=lambda pkt: handle_pkt(pkt, discovered_networks, net_count))
+        # sniff for `timeout` seconds on `iface` interface hoping to capture `net_cout` packets. 
         scap.sniff(iface=iface, timeout=timeout, count=net_count, store=False,
                     prn=lambda pkt: handle_pkt(pkt, discovered_networks))
             
