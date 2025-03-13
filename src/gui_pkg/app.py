@@ -22,10 +22,10 @@ app = Flask(__name__)
 
 @app.route('/api/bluetooth/scan', methods=['GET'])
 def get_bluetooth_scan():
-    # http://127.0.0.1:5000/api/bluetooth/scan?device_id=<device index>&duration=<seconds>
-    device_id = request.args.get('device_id', default=1, type=int)
+    # http://127.0.0.1:5000/api/bluetooth/scan?iface=<hci#>&duration=<seconds>
+    iface = request.args.get('iface', default=1, type=str)
     duration = request.args.get('duration', default=1, type=int)
-    return BT.device_scan(device_id, duration)
+    return BT.device_scan(iface, duration)
 
 @app.route('/api/inet/net/scan', methods=['GET'])
 def get_inet_net_scan():
