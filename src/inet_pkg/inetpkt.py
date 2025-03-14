@@ -44,18 +44,18 @@ class TCPOps:
 
     # Incomplete
     @staticmethod      
-    def os_scan(iface:str, dst:str, timeout:int=2):
+    def os_scan(iface:str, dst:str, single_timeout:int=2):
         # TTL ~64 often indicates Linux/Unix.
         # TTL ~128 typically suggests Windows.
         # TTL >128 may indicate Cisco/Solaris.
         port_range = RandShort()
-        pkt = IP(dst=dst) / TCP(dport=dport, flags="S")
-        reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
-        if reply is None or not reply.haslayer(TCP):
-            return None 
-        tcp_layer = reply.getlayer(TCP)
-        ttl = tcp_layer.ttl 
-        win = tcp_layer.window
+        ports = {}
+        for dport in range(port_range.min, port_range.max + 1):
+            ports[port] = TCPOps.syn_scan(iface=iface, dst=dst, dport:dport, timeout=single_timeout)
+        for dport, port_info in ports.items():
+            # Infer OS here
+            ttl = tcp_layer.ttl 
+            win = tcp_layer.window
 
 
     @staticmethod
