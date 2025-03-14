@@ -103,7 +103,7 @@ class TCPOps:
 
 # TCP ACK Scan
 
-# SYN Scan
+# SYN Scan $ 
 
 
 #  Nmap Scripting Engine (NSE) for CVEs and miscongurations? 
@@ -115,7 +115,7 @@ class TCPOps:
 
 # Exploits scanning?
 
-# Traceroute Scan
+# Traceroute Scan $ 
 
 # DNS scanning 
 
