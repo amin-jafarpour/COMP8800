@@ -1,10 +1,10 @@
-from scapy.all import IP, ICMP, sr1
+from scapy.all import IP, ICMP, sr1, TCP 
 import ipaddress
 from inet import Inet 
 
 class ICMPOps:
     @staticmethod
-    def ping_device(iface:str, dst:str, timeout:int=2):
+    def ping(iface:str, dst:str, timeout:int=2):
         pkt = IP(dst=dst) / ICMP() 
         reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
         return reply
@@ -16,12 +16,33 @@ class ICMPOps:
         replies:dict = {} 
         for addr_obj in hosts:
             dst = str(addr_obj)
-            reply = ICMPOps.ping_device(iface=iface,dst=dst, timeout=single_timeout)
+            reply = ICMPOps.ping(iface=iface,dst=dst, timeout=single_timeout)
             replies[dst] = reply 
         return reply
 
 
 
+class TCPOps:
+    @staticmethod
+    def syn_scan(iface:str, port:int):
+        pkt = IP(dst=target) / TCP(dport=port, flags="S")
+        reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
+        if reply is None:
+            return 'Filtered'
+        if reply.haslayer(TCP):
+            tcp_layer = reply.getlayer(TCP)
+            # 0x12: SYN-ACK (open)
+            if tcp_layer.flags == 0x12:
+                # Send RST to gracefully close the connection
+                rst_pkt = IP(dst=target) / TCP(dport=port, flags="R")
+                send(rst_pkt, iface=iface, verbose=False)
+                return 'Open'
+            # 0x14: RST-ACK (closed)
+            elif tcp_layer.flags == 0x14:
+                return 'Closed'
+        return 'Unknown'
+
+            
 
 
 
@@ -30,7 +51,7 @@ class ICMPOps:
 
 
 
-# Pinging via ICMP$
+# Pinging via ICMP $
 
 # Port scaning: single, range, list of ports. 
 
