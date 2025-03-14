@@ -1,4 +1,4 @@
-from scapy.all import IP, ICMP, sr1, TCP, send 
+from scapy.all import IP, ICMP, sr1, TCP, send, RandShort 
 import ipaddress
 from inet import Inet 
 
@@ -42,7 +42,31 @@ class TCPOps:
                 return {'state': 'closed', 'reply': reply}
         return {'state': 'unknown', 'reply': reply}
 
-            
+    # Incomplete
+    @staticmethod      
+    def os_scan(iface:str, dst:str, timeout:int=2):
+        # TTL ~64 often indicates Linux/Unix.
+        # TTL ~128 typically suggests Windows.
+        # TTL >128 may indicate Cisco/Solaris.
+        port_range = RandShort()
+        pkt = IP(dst=dst) / TCP(dport=dport, flags="S")
+        reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
+        if reply is None or not reply.haslayer(TCP):
+            return None 
+        tcp_layer = reply.getlayer(TCP)
+        ttl = tcp_layer.ttl 
+        win = tcp_layer.window
+
+
+    @staticmethod
+    def f():
+
+
+
+
+
+
+
 
 
 
