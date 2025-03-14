@@ -53,7 +53,7 @@ class TCPOps:
 
 # Pinging via ICMP $
 
-# Port scaning: single, range, list of ports. 
+# Port scaning: single, range, list of ports. $ 
 
 # Aggressive Scaning: OS detection, version detection, script scanning, and traceroute.
 
