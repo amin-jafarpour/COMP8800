@@ -28,7 +28,7 @@ class TCPOps:
         pkt = IP(dst=dst) / TCP(dport=dport, flags="S")
         reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
         if reply is None:
-            return 'Filtered'
+            return {'state': 'filtered', 'reply': None}
         if reply.haslayer(TCP):
             tcp_layer = reply.getlayer(TCP)
             # 0x12: SYN-ACK (open)
@@ -36,11 +36,11 @@ class TCPOps:
                 # Send RST to gracefully close the connection
                 rst_pkt = IP(dst=dst) / TCP(dport=dport, flags="R")
                 send(rst_pkt, iface=iface, verbose=False)
-                return 'Open'
+                return {'state': 'open', 'reply': reply}
             # 0x14: RST-ACK (closed)
             elif tcp_layer.flags == 0x14:
                 return 'Closed'
-        return 'Unknown'
+        return {'state': 'unknown', 'reply': reply}
 
             
 
