@@ -1,4 +1,4 @@
-# Pinging 
+# Pinging via ICMP
 
 # Port scaning: single, range, list of ports. 
 
@@ -31,6 +31,16 @@
 # Heartbleed Vulnerability? 
 
 # EternalBlue Vulnerability?
+
+#Randomizes source IP 
+
+#Randomizes source MAC
+
+#SYN Flood Attack
+
+# UDP Flood Attack
+
+# ICMP  Flood Attack
 
 
 
