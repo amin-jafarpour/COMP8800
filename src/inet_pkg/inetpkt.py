@@ -20,6 +20,18 @@ class ICMPOps:
             replies[dst] = reply 
         return reply
 
+        @staticmethod
+    def traceroute(iface:str, dst:str, max_hops:int=30, dport:int=80):
+        res, _ = traceroute(target=dst, iface=iface, maxttl=max_hops, dport=dport, verbose=False)
+        hops = []
+        index_counter = 1
+        for snd, rcv in res:
+            hop_ip = rcv.src if rcv else "*"
+            hops.append(f'{index_counter} \t{hop_ip}')
+            index_counter = index_counter + 1
+        hops = ['Index   IP Hop'] + hops
+        return '\n'.join(hops)
+
 
 
 class TCPOps:
@@ -43,17 +55,7 @@ class TCPOps:
         return {'state': 'unknown', 'reply': reply}
 
     
-    @staticmethod
-    def traceroute(iface:str, dst:str, max_hops:int=30, dport:int=80):
-        res, _ = traceroute(target=dst, iface=iface, maxttl=max_hops, dport=dport, verbose=False)
-        hops = []
-        index_counter = 1
-        for snd, rcv in res:
-            hop_ip = rcv.src if rcv else "*"
-            hops.append(f'{index_counter} \t{hop_ip}')
-            index_counter = index_counter + 1
-        hops = ['Index   IP Hop'] + hops
-        return '\n'.join(hops)
+
         
       
 
