@@ -59,7 +59,8 @@ class TCPOps:
 
 
     @staticmethod
-    def f():
+    def service_scan():
+        pass 
 
 
 
