@@ -1,4 +1,4 @@
-from scapy.all import IP, ICMP, sr1, TCP, send, RandShort 
+from scapy.all import IP, ICMP, sr1, TCP, send, RandShort, traceroute
 import ipaddress
 from inet import Inet 
 
@@ -42,6 +42,27 @@ class TCPOps:
                 return {'state': 'closed', 'reply': reply}
         return {'state': 'unknown', 'reply': reply}
 
+    
+    @staticmethod
+    def traceroute(iface:str, dst:str, max_hops:int=30, dport:int=80):
+        res, _ = traceroute(target=dst, iface=iface, maxttl=max_hops, dport=dport, verbose=False)
+        hops = []
+        index_counter = 1
+        for snd, rcv in res:
+            hop_ip = rcv.src if rcv else "*"
+            hops.append(f'{index_counter} {hop_ip}\t{rcv.flags.flagrepr()}')
+            index_counter = index_counter + 1
+        hops = ['Index   IP\t  Flags'] + hops
+        return '\n'.join(hops)
+        
+      
+
+
+
+
+
+    
+
     # Incomplete
     @staticmethod      
     def os_scan(iface:str, dst:str, single_timeout:int=2):
@@ -51,11 +72,12 @@ class TCPOps:
         port_range = RandShort()
         ports = {}
         for dport in range(port_range.min, port_range.max + 1):
-            ports[port] = TCPOps.syn_scan(iface=iface, dst=dst, dport:dport, timeout=single_timeout)
+            ports[port] = TCPOps.syn_scan(iface=iface, dst=dst, dport=dport, timeout=single_timeout)
         for dport, port_info in ports.items():
+            pass 
             # Infer OS here
-            ttl = tcp_layer.ttl 
-            win = tcp_layer.window
+            #ttl = tcp_layer.ttl 
+            #win = tcp_layer.window
 
 
     @staticmethod
