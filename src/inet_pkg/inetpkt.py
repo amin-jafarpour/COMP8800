@@ -34,7 +34,7 @@ class TCPOps:
             # 0x12: SYN-ACK (open)
             if tcp_layer.flags == 0x12:
                 # Send RST to gracefully close the connection
-                rst_pkt = IP(dst=dst) / TCP(dport=dport, flags="R")
+                rst_pkt = IP(dst=dst) / TCP(dport=dport, flags="R", ack=tcp_layer.seq + 1)
                 send(rst_pkt, iface=iface, verbose=False)
                 return {'state': 'open', 'reply': reply}
             # 0x14: RST-ACK (closed)
