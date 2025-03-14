@@ -57,16 +57,6 @@ class TCPOps:
                 return {'state': 'closed', 'reply': reply}
         return {'state': 'unknown', 'reply': reply}
 
-    
-
-        
-      
-
-
-
-
-
-    
 
     # Incomplete
     @staticmethod      
@@ -84,7 +74,7 @@ class TCPOps:
             #ttl = tcp_layer.ttl 
             #win = tcp_layer.window
 
-
+    # Incomplete
     @staticmethod
     def service_scan():
         pass 
