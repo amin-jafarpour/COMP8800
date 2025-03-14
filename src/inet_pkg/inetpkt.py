@@ -32,7 +32,7 @@ class ICMPOps:
             hop_ip = rcv.src if rcv else "*"
             hops.append(f'{index_counter} \t{hop_ip}\t{(rcv.time - start_time) * 1000:.4f}ms')
             index_counter = index_counter + 1
-        hops = ['Index   IP Hop'] + hops
+        hops = ['Index   IP Hop\tTime'] + hops
         return '\n'.join(hops)
 
 
