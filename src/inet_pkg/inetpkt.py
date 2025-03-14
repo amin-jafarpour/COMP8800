@@ -1,4 +1,4 @@
-from scapy.all import IP, ICMP, sr1, TCP 
+from scapy.all import IP, ICMP, sr1, TCP, send 
 import ipaddress
 from inet import Inet 
 
