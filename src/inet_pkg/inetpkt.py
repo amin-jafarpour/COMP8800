@@ -24,7 +24,7 @@ class ICMPOps:
 
 class TCPOps:
     @staticmethod
-    def syn_scan(iface:str, dst:str, dport:int):
+    def syn_scan(iface:str, dst:str, dport:int, timeout:int=2):
         pkt = IP(dst=dst) / TCP(dport=dport, flags="S")
         reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
         if reply is None:
