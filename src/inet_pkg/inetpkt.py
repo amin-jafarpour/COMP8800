@@ -12,6 +12,7 @@
 
 
 #  Nmap Scripting Engine (NSE) for CVEs and miscongurations? 
+#nmap --script vuln <target>
 
 # Open Proxy Servers? 
 
@@ -26,5 +27,11 @@
 # Decoy Scan?
 
 # ARP poisoning
+
+# Heartbleed Vulnerability? 
+
+# EternalBlue Vulnerability?
+
+
 
 
