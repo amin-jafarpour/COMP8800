@@ -2,21 +2,21 @@ from scapy.all import IP, ICMP, sr1
 import ipaddress
 from inet import Inet 
 
-class ICMP:
+class ICMPOps:
     @staticmethod
     def ping_device(iface:str, dst:str, timeout:int=2):
         pkt = IP(dst=dst) / ICMP() 
-        reply = sr1(pkt, timeout=timeout, verbose=False)
+        reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
         return reply
 
     @staticmethod 
-    def ping_subnet(iface:str, single_timeout:int):
+    def ping_subnet(iface:str, single_timeout:int=2):
         subnet = Inet.get_net_cidr(iface=iface)
         hosts = ipaddress.ip_network(subnet, strict=False).hosts()
-        replies = []
+        replies:dict = {} 
         for dst in hosts:
-            reply = ICMP.ping_device(dst, single_timeout)
-            replies.append(reply)
+            reply = ICMPOps.ping_device(dst, single_timeout)
+            replies[dst] = reply 
         return reply
 
 
