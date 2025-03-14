@@ -14,7 +14,8 @@ class ICMPOps:
         subnet = Inet.get_net_cidr(iface=iface)
         hosts = ipaddress.ip_network(subnet, strict=False).hosts()
         replies:dict = {} 
-        for dst in hosts:
+        for addr_obj in hosts:
+            dst = str(addr_obj)
             reply = ICMPOps.ping_device(dst, single_timeout)
             replies[dst] = reply 
         return reply
