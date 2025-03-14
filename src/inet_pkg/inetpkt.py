@@ -50,9 +50,9 @@ class TCPOps:
         index_counter = 1
         for snd, rcv in res:
             hop_ip = rcv.src if rcv else "*"
-            hops.append(f'{index_counter} {hop_ip}\t{rcv.flags.flagrepr()}')
+            hops.append(f'{index_counter} \t{hop_ip}')
             index_counter = index_counter + 1
-        hops = ['Index   IP\t  Flags'] + hops
+        hops = ['Index   IP Hop'] + hops
         return '\n'.join(hops)
         
       
