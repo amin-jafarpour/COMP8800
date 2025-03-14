@@ -16,7 +16,7 @@ class ICMPOps:
         replies:dict = {} 
         for addr_obj in hosts:
             dst = str(addr_obj)
-            reply = ICMPOps.ping_device(dst, single_timeout)
+            reply = ICMPOps.ping_device(iface=iface,dst=dst, timeout=single_timeout)
             replies[dst] = reply 
         return reply
 
