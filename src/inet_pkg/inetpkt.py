@@ -97,9 +97,7 @@ class TCPOps:
 
 # Port scaning: single, range, list of ports. $ 
 
-# Aggressive Scaning: OS detection, version detection, script scanning, and traceroute.
-
-# Service scaning and service version scaning. 
+# Aggressive Scaning: OS detection, service/version detection, script scanning, and traceroute.
 
 # TCP ACK Scan
 
