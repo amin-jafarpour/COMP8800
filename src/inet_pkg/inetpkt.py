@@ -91,8 +91,22 @@ class TCPOps:
         pkt = IP(dst=dst) / TCP(dport=dport, flags="F")
         reply = sr1(pkt, timeout=timeout, verbose=False)
         # return {'state': 'filtered', 'reply': None}
+        if reply is None:
+            return {'state': 'unknown', 'reply': None} 
+        elif reply.haslayer(TCP):
+            tcp_layer = reply.getlayer(TCP)
+            if tcp_layer.flags & 0x04: #  0x04: RST flag
+                return {'state': 'closed', 'reply': reply} 
+            else: 
+                return {'state': 'unknown', 'reply': reply} 
+        # ICMP indicate filtering or unreachable ports
+        elif reply.haslayer("ICMP"):
+            return {'state': 'filtered', 'reply': reply} 
+        return return {'state': 'unknown', 'reply': None} 
 
-        
+
+
+
 
 
 
