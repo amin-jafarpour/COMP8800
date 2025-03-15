@@ -273,7 +273,7 @@ class Inet:
 
 
     @staticmethod
-    def scan_networks(iface:str, net_count:int, timeout:int):
+    def scan_networks(iface:str, net_count:int=5, timeout:int=5):
         """
         
         Scans neatby networks and returns infomation about them.
