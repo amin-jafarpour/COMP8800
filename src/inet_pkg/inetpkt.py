@@ -137,9 +137,9 @@ class UDPOps:
                 return {'msg': 'No records found.', 'addresses': [], 'reply': reply}
             else: 
                 addresses = []
-                for i in range(dns_layer.ancount)
-                addresses.append(dns_layer.an.rdata)
-                return {'msg': 'Records found..', 'addresses': addresses, 'reply': reply}
+                for i in range(dns_layer.ancount):
+                    addresses.append(dns_layer.an.rdata)
+                return {'msg': 'Records found.', 'addresses': addresses, 'reply': reply}
        
 
 
