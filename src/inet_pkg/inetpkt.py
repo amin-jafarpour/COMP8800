@@ -2,11 +2,14 @@ from scapy.all import IP, ICMP, sr1, TCP, send, RandShort, traceroute, DNS, DNSQ
 import ipaddress
 from inet import Inet 
 
-# scapy.all.srploop(
-# scapy.all.srpflood(
-# scapy.all.srp1flood(
-# scapy.all.srflood(     
+# scapy.all.sndrcvflood(
 # scapy.all.sr1flood(
+# scapy.all.srflood(
+# scapy.all.srp1flood(
+# scapy.all.srpflood(
+
+
+
 
 class ICMPOps:
     @staticmethod
