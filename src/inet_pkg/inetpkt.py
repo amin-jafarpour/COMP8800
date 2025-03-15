@@ -43,7 +43,7 @@ class TCPOps:
         pkt = IP(dst=dst) / TCP(dport=dport, flags="S")
         reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
         if reply is None:
-            return {'state': 'filtered', 'reply': reply}
+            return {'state': 'unknown', 'reply': reply}
         if reply.haslayer(TCP):
             tcp_layer = reply.getlayer(TCP)
             # 0x12: SYN-ACK (open)
@@ -55,7 +55,8 @@ class TCPOps:
             # 0x14: RST-ACK (closed)
             elif tcp_layer.flags == 0x14:
                 return {'state': 'closed', 'reply': reply}
-        return {'state': 'unknown', 'reply': reply}
+        else:
+            return {'state': 'unknown', 'reply': reply}
 
 
     @staticmethod
@@ -86,6 +87,14 @@ class TCPOps:
         # This behavior allows the scanner to infer the state of the port.
         # Although note that some operating systems (such as Windows) may handle FIN packets 
         # differently, often returning a RST regardless of the port state.
+
+        pkt = IP(dst=dst) / TCP(dport=dport, flags="F")
+        reply = sr1(pkt, timeout=timeout, verbose=False)
+        # return {'state': 'filtered', 'reply': None}
+
+        
+
+
 
     # Incomplete
     @staticmethod      
