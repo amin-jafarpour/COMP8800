@@ -229,6 +229,7 @@ class Inet:
         :type field_keys: list
         :param acc: Dictionary accumulating fields present in `field_keys`
         :type acc: dict 
+        NOTE: Ensure that all string values names in field_keys are all lowercase. 
         :param duplicates: Stores count index of duplicates to be appended to duplicate field names.
         :type duplicates: dict
         
@@ -238,6 +239,7 @@ class Inet:
         # if either `acc` or `duplicates` is None, set them to empty dict
         if acc is None:
             acc = {}
+            field_keys = list(map(lambda x: x.lower(), field_keys))
         if duplicates is None:
             duplicates = {}
 
