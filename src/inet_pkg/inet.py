@@ -16,6 +16,11 @@ import scapy.all as scap
 import ipaddress
 import random
 
+
+# scap.conf.ifaces 
+# scap.conf.iface 
+
+
 class Inet:
     """
     
