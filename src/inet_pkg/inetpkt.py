@@ -207,6 +207,7 @@ class UDPOps:
     @staticmethod
     def udp_flood(iface:str, dst:str, dport:int, timeout:int=5):
         pkt = IP(dst=dst) / UDP(dport=dport) / Raw('heey')
+        # "not ip and not arp" is BPF filter to discard responses at kernel level.
         srflood(pkt, iface='wlp34s0', timeout=timeout, filter='not ip and not arp')
 
 
