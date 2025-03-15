@@ -128,15 +128,18 @@ class UDPOps:
         pkt = IP(dst=dst) / UDP(dport=dport) / DNS(rd=1, qd=DNSQR(qname=qname, qtype=qtype)) 
         reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
         if reply is None: 
-            return {'msg': 'No response recevied for query', 'answers': [], 'reply': None} 
+            return {'msg': 'No response recevied for query', 'addresses': [], 'reply': None} 
         if reply.haslayer(DNS):
             dns_layer = reply.getlayer(DNS)
             # "ancount" stands for "Answer Count", which indicates the number of 
             # resource records (RRs) in the Answer Section of a DNS response.
             if dns_layer.ancount == 0:
-                return {'msg': 'No records found.', 'answers': [], 'reply': reply}
+                return {'msg': 'No records found.', 'addresses': [], 'reply': reply}
             else: 
-                return {'msg': 'Records found..', 'answers': dns_layer.an, 'reply': reply}
+                addresses = []
+                for i in range(dns_layer.ancount)
+                addresses.append(dns_layer.an.rdata)
+                return {'msg': 'Records found..', 'addresses': addresses, 'reply': reply}
        
 
 
