@@ -247,23 +247,17 @@ class UDPOps:
 
 
 
-# Pinging via ICMP $
-
-# Port scaning: single, range, list of ports. $ 
-
-# FIN Scan $ 
-
-# TCP ACK Scan $ 
-
-# SYN Scan $ 
-
-# Traceroute Scan $ 
-
-# DNS scanning $ 
 
 
 
 # Aggressive Scaning: OS detection, service/version detection, script scanning, and traceroute.
+# ARP poisoning
+#Randomizes source IP 
+#Randomizes source MAC
+#SYN Flood Attack
+# ICMP  Flood Attack
+# christmas flood 
+
 
 
 
@@ -271,34 +265,14 @@ class UDPOps:
 #nmap --script vuln <target>
 
 # Open Proxy Servers? 
-
 # SMB Shares? 
-
 # Exploits scanning?
-
-
-
 # Decoy Scan?
-
-# ARP poisoning
-
 # Heartbleed Vulnerability? 
-
 # EternalBlue Vulnerability?
 
-#Randomizes source IP 
-
-#Randomizes source MAC
-
-#SYN Flood Attack
-
-# UDP Flood Attack
-
-# ICMP  Flood Attack
 
 
-
-# christmas flood 
 
 
 
