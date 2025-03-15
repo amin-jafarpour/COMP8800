@@ -1,4 +1,4 @@
-from scapy.all import IP, ICMP, sr1, TCP, send, RandShort, traceroute
+from scapy.all import IP, ICMP, sr1, TCP, send, RandShort, traceroute, DNS, DNSQR
 import ipaddress
 from inet import Inet 
 
@@ -78,17 +78,6 @@ class TCPOps:
         else:
             return {'state': 'unknown', 'reply': reply}
 
-
-
-        
-            
-
-            
-
-
-
-
-
     # Incomplete
     @staticmethod      
     def os_scan(iface:str, dst:str, single_timeout:int=2):
@@ -113,6 +102,8 @@ class TCPOps:
 
 
 
+class UDPOps:
+    pass 
 
 
 
@@ -137,7 +128,7 @@ class TCPOps:
 
 # Aggressive Scaning: OS detection, service/version detection, script scanning, and traceroute.
 
-# TCP ACK Scan
+# TCP ACK Scan $ 
 
 # SYN Scan $ 
 
@@ -153,7 +144,7 @@ class TCPOps:
 
 # Traceroute Scan $ 
 
-# DNS scanning 
+# DNS scanning $ 
 
 # Decoy Scan?
 
