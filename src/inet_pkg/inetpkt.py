@@ -127,9 +127,9 @@ class UDPOps:
         # "qname" is domian name and "qtype" is record type.
         pkt = IP(dst=dst) / UDP(dport=dport) / DNS(rd=1, qd=DNSQR(qname=qname, qtype=qtype)) 
         reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
-        if pkt is None: 
+        if reply is None: 
             return {'msg': 'No response recevied for query', 'answers': [], 'reply': None} 
-        if pkt.haslayer(DNS):
+        if reply.haslayer(DNS):
             dns_layer = reply.getlayer(DNS)
             # "ancount" stands for "Answer Count", which indicates the number of 
             # resource records (RRs) in the Answer Section of a DNS response.
