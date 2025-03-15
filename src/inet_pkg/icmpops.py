@@ -5,6 +5,28 @@ from scapy.all import IP, ICMP, sr1, traceroute, srflood
 
 
 
+# Aggressive Scaning: OS detection, service/version detection, script scanning, and traceroute.
+# ARP poisoning
+#Randomizes source IP 
+#Randomizes source MAC
+#SYN Flood Attack
+# ICMP  Flood Attack
+# christmas flood 
+
+
+
+
+#  Nmap Scripting Engine (NSE) for CVEs and miscongurations? 
+#nmap --script vuln <target>
+
+# Open Proxy Servers? 
+# SMB Shares? 
+# Exploits scanning?
+# Decoy Scan?
+# Heartbleed Vulnerability? 
+# EternalBlue Vulnerability?
+
+
 
 class ICMPOps:
     @staticmethod
