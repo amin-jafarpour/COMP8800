@@ -90,9 +90,8 @@ class TCPOps:
 
         pkt = IP(dst=dst) / TCP(dport=dport, flags="F")
         reply = sr1(pkt, timeout=timeout, verbose=False)
-        # return {'state': 'filtered', 'reply': None}
         if reply is None:
-            return {'state': 'unknown', 'reply': None} 
+            return {'state': 'open|unknown', 'reply': None} 
         elif reply.haslayer(TCP):
             tcp_layer = reply.getlayer(TCP)
             if tcp_layer.flags & 0x04: #  0x04: RST flag
@@ -102,7 +101,7 @@ class TCPOps:
         # ICMP indicate filtering or unreachable ports
         elif reply.haslayer("ICMP"):
             return {'state': 'filtered', 'reply': reply} 
-        return return {'state': 'unknown', 'reply': None} 
+        return  {'state': 'unknown', 'reply': None} 
 
 
 
@@ -172,7 +171,32 @@ class UDPOps:
                 for i in range(dns_layer.ancount):
                     addresses.append(dns_layer.an.rdata)
                 return {'msg': 'Records found.', 'addresses': addresses, 'reply': reply}
-       
+    
+
+    @staticmethod
+    def udp_scan(iface:str, dst:str, dport:int, timeout:int=2):
+        # No response: Port is classified as open or filtered.
+        # ICMP response with type 3 and code 3: Port is closed.
+        # Other ICMP messages (e.g., type 3 with codes 1, 2, 9, 10, 13): Typically indicate filtering. 
+        pkt = IP(dst=dst) / UDP(dport=dport)
+        reply = sr1(pkt, timeout=timeout, verbose=False)
+        if reply is None: 
+            return {'state': 'open|filtered', 'reply': reply} 
+        if reply.haslayer(ICMP):
+             icmp_layer = reply.getlayer(ICMP)
+             # Check for "destination unreachable - port unreachable" message.
+             if icmp_layer.type == 3 and icmp_layer.code == 3:
+                return {'state': 'closed', 'reply': reply} 
+            # Other ICMP codes can indicate filtering.
+            elif icmp_layer.type == 3 and icmp_layer.code in [1, 2, 9, 10, 13]:
+                return {'state': 'filtered', 'reply': reply} 
+        # Receiving a UDP response (rare) can be interpreted as an open port.
+        if response.haslayer(UDP):
+            return {'state': 'open', 'reply': reply} 
+        return {'state': 'unknown', 'reply': reply}
+
+
+
 
 
 
