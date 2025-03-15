@@ -71,6 +71,22 @@ class UDPOps:
         srflood(pkt, iface=iface, timeout=timeout, verbose=False, filter='not ip and not arp')
 
 
+    @staticmethod
+    def traceroute(iface:str, dst:str, max_hops:int=30, dport:int=80):
+        res, _ = traceroute(target=dst, iface=iface, maxttl=max_hops, dport=dport, verbose=False)
+        hops = []
+        index_counter = 1
+        start_time = None
+        for snd, rcv in res:
+            if start_time is None:
+                start_time = rcv.time
+            hop_ip = rcv.src if rcv else "*"
+            hops.append(f'{index_counter} \t{hop_ip}\t{(rcv.time - start_time) * 1000:.4f}ms')
+            index_counter = index_counter + 1
+        hops = ['Index   IP Hop\t\tTime'] + hops
+        return '\n'.join(hops)
+
+
 
 
 

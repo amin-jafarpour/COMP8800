@@ -9,8 +9,11 @@ from scapy.all import IP, ICMP, sr1, traceroute, srflood
 # ARP poisoning
 #Randomizes source IP 
 #Randomizes source MAC
-
 # ICMP  Flood Attack
+
+# ICMP 	Router Advertisement	Router advertises itself.
+
+
 
 
 
@@ -46,17 +49,12 @@ class ICMPOps:
             replies[dst] = reply 
         return reply
 
+
+
     @staticmethod
-    def traceroute(iface:str, dst:str, max_hops:int=30, dport:int=80):
-        res, _ = traceroute(target=dst, iface=iface, maxttl=max_hops, dport=dport, verbose=False)
-        hops = []
-        index_counter = 1
-        start_time = None
-        for snd, rcv in res:
-            if start_time is None:
-                start_time = rcv.time
-            hop_ip = rcv.src if rcv else "*"
-            hops.append(f'{index_counter} \t{hop_ip}\t{(rcv.time - start_time) * 1000:.4f}ms')
-            index_counter = index_counter + 1
-        hops = ['Index   IP Hop\t\tTime'] + hops
-        return '\n'.join(hops)
+    def echo_req_flood(iface:str, dst:str, timeout:int=5):
+        # ICMP echo request by default.
+        pkt = IP(dst=dst) / ICMP()  
+        # "not ip and not arp" is BPF filter to discard responses at kernel level.
+        srflood(pkt, iface=iface, timeout=timeout, verbose=False, filter='not ip and not arp')
+        
