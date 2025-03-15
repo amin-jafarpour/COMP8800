@@ -1,4 +1,4 @@
-from scapy.all import IP, ICMP, sr1, TCP, send, RandShort, traceroute, DNS, DNSQR, UDP
+from scapy.all import IP, ICMP, sr1, TCP, send, RandShort, traceroute, DNS, DNSQR, UDP, Raw, srflood
 import ipaddress
 from inet import Inet 
 
@@ -196,8 +196,8 @@ class UDPOps:
              # Check for "destination unreachable - port unreachable" message.
              if icmp_layer.type == 3 and icmp_layer.code == 3:
                 return {'state': 'closed', 'reply': reply} 
-            # Other ICMP codes can indicate filtering.
-            elif icmp_layer.type == 3 and icmp_layer.code in [1, 2, 9, 10, 13]:
+             # Other ICMP codes can indicate filtering.
+             elif icmp_layer.type == 3 and icmp_layer.code in [1, 2, 9, 10, 13]:
                 return {'state': 'filtered', 'reply': reply} 
         # Receiving a UDP response (rare) can be interpreted as an open port.
         if response.haslayer(UDP):
@@ -208,7 +208,7 @@ class UDPOps:
     def udp_flood(iface:str, dst:str, dport:int, timeout:int=5):
         pkt = IP(dst=dst) / UDP(dport=dport) / Raw('heey')
         # "not ip and not arp" is BPF filter to discard responses at kernel level.
-        srflood(pkt, iface='wlp34s0', timeout=timeout, filter='not ip and not arp')
+        srflood(pkt, iface=iface, timeout=timeout, verbose=False, filter='not ip and not arp')
 
 
 
