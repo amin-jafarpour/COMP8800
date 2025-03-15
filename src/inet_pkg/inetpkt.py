@@ -103,7 +103,14 @@ class TCPOps:
 
 
 class UDPOps:
-    pass 
+    # Type A: Address Record, maps a domain name to an IPv4 address.
+    # Type AAAA: Quad A Record, maps a domain name to an IPv6 address.
+    # Type MX: Mail Exchange Record, specifies the mail servers.
+    # Type NS: Name Server Record, Specifies the authoritative name servers for a domain.
+    # Type SOA: Start of Authority Record, contains admin info, e.g., primary name server and last update timestamp.
+    # Type TXT: Text Record, Stores arbitrary text for verification and security purposes.
+    DNS_RD_TYPES:list = ['A', 'AAAA', 'MX', 'NS', 'SOA', 'TXT']
+
 
 
 
