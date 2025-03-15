@@ -9,9 +9,9 @@ from scapy.all import IP, ICMP, sr1, traceroute, srflood
 # ARP poisoning
 #Randomizes source IP 
 #Randomizes source MAC
-#SYN Flood Attack
+
 # ICMP  Flood Attack
-# christmas flood 
+
 
 
 

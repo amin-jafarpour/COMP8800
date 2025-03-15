@@ -66,6 +66,19 @@ class TCPOps:
             return {'state': 'filtered', 'reply': reply} 
         return  {'state': 'unknown', 'reply': None} 
 
+    
+    @staticmethod
+    def syn_flood(iface:str, dst:str, dport:int, timeout:int=2):
+        pass 
+
+    @staticmethod 
+    def xmas_flood(iface:str, dst:str, dport:int, timeout:int=2):
+        # An Xmas TCP packet has all flags set: FIN, SYN, RST, PSH, ACK, URG.
+        
+
+        pass 
+
+
 
 
 
