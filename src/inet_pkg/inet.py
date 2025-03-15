@@ -283,6 +283,7 @@ class Inet:
         :type iface: str
         :param net_count: Number of networks to scan.
         :type net_count: int
+        NOTE: assign zero to `net_count` argument to capture as many packets as possible in `timeout` time.
         :param timeout: timeout in seconds after which it stops sniffing packets. 
         :type timeout: int
         
