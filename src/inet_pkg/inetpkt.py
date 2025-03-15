@@ -58,6 +58,37 @@ class TCPOps:
         return {'state': 'unknown', 'reply': reply}
 
 
+    @staticmethod
+    def ack_scan(iface:str, dst:str, dport:int, timeout:int=2):
+        # An ACK scan determines whether a firewall is filtering packets 
+        # by sending TCP packets with the ACK flag set to different ports.
+        # It determines which ports are filtered or unfiltered.
+        # If an unfiltered port receives an ACK packet, 
+        # it responds with an RST (reset) packet.
+        # If a filtered port is behind a firewall, 
+        # there will be no response or an ICMP unreachable message.
+        pkt = IP(dst=target_ip) / TCP(dport=dport, flags="A")
+        reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
+        if pkt is None: 
+            return {'state': 'filtered', 'reply': None}
+        elif pkt.haslayer(TCP) and tcp_layer.flags == 0x14: # 0x14: RST
+            return {'state': 'unfiltered', 'reply': reply}
+        elif reply.haslayer(ICMP): # ICMP unreachable msg
+            return {'state': 'filtered', 'reply': reply}
+        else:
+            return {'state': 'unknown', 'reply': reply}
+            
+
+
+        
+            
+
+            
+
+
+
+
+
     # Incomplete
     @staticmethod      
     def os_scan(iface:str, dst:str, single_timeout:int=2):
@@ -78,6 +109,13 @@ class TCPOps:
     @staticmethod
     def service_scan():
         pass 
+
+
+
+
+
+
+
 
 
 
