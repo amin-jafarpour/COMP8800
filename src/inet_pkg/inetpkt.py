@@ -104,12 +104,31 @@ class TCPOps:
 
 class UDPOps:
     # Type A: Address Record, maps a domain name to an IPv4 address.
+    A_RD_TYPE:str = 'A'
     # Type AAAA: Quad A Record, maps a domain name to an IPv6 address.
+    AAAA_RD_TYPE:str = 'AAAA'
     # Type MX: Mail Exchange Record, specifies the mail servers.
+    MX_RD_TYPE:str = 'MX'
     # Type NS: Name Server Record, Specifies the authoritative name servers for a domain.
+    NS_RD_TYPE:str = 'NS'
     # Type SOA: Start of Authority Record, contains admin info, e.g., primary name server and last update timestamp.
+    SOA_RD_TYPE:str = 'SOA'
     # Type TXT: Text Record, Stores arbitrary text for verification and security purposes.
-    DNS_RD_TYPES:list = ['A', 'AAAA', 'MX', 'NS', 'SOA', 'TXT']
+    TXT_RD_TYPE:str = 'TXT'
+    
+    @staticmethod
+    def dns_scan(iface:str, dst:str, dport:int=53, timeout:int=2):
+        # RD (Recursion Desired): Is a flag use to  perform a recursive query, where 
+        # DNS server to fully resolve the query instead of referring the client to another DNS server.
+        # QD (Query Domain): Refers to the Query Section of a DNS message. It contains the details 
+        # of the domain name being queried, including the type of record requested 
+        # (A, MX, TXT, etc.) and the class (typically IN for internet).
+        pkt = IP(dst=dst) / UDP(dport=dport) / DNS(rd=1, qd=DNSQR(qname=domain, qtype=rtype))
+        reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
+        
+
+
+
 
 
 
