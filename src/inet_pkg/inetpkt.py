@@ -1,4 +1,4 @@
-from scapy.all import IP, ICMP, sr1, TCP, send, RandShort, traceroute, DNS, DNSQR
+from scapy.all import IP, ICMP, sr1, TCP, send, RandShort, traceroute, DNS, DNSQR, UDP
 import ipaddress
 from inet import Inet 
 
@@ -117,13 +117,15 @@ class UDPOps:
     TXT_RD_TYPE:str = 'TXT'
     
     @staticmethod
-    def dns_scan(iface:str, dst:str, dport:int=53, qtype:str=A_RD_TYPE, timeout:int=2):
+    def dns_scan(iface:str, dst:str, qname:str, dport:int=53, qtype:str=A_RD_TYPE, timeout:int=2):
         # RD (Recursion Desired): Is a flag use to  perform a recursive query, where 
         # DNS server to fully resolve the query instead of referring the client to another DNS server.
         # QD (Query Domain): Refers to the Query Section of a DNS message. It contains the details 
         # of the domain name being queried, including the type of record requested 
         # (A, MX, TXT, etc.) and the class (typically IN for internet).
-        pkt = IP(dst=dst) / UDP(dport=dport) / DNS(rd=1, qd=DNSQR(qname=domain, qtype=qtype)) # Query type is Record Type
+
+        # "qname" is domian name and "qtype" is record type.
+        pkt = IP(dst=dst) / UDP(dport=dport) / DNS(rd=1, qd=DNSQR(qname=qname, qtype=qtype)) 
         reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
         if pkt is None: 
             return {'msg': 'No response recevied for query', 'answers': [], 'reply': None} 
