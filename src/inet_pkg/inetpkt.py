@@ -67,17 +67,17 @@ class TCPOps:
         # it responds with an RST (reset) packet.
         # If a filtered port is behind a firewall, 
         # there will be no response or an ICMP unreachable message.
-        pkt = IP(dst=target_ip) / TCP(dport=dport, flags="A")
+        pkt = IP(dst=dst) / TCP(dport=dport, flags="A")
         reply = sr1(pkt, iface=iface, timeout=timeout, verbose=False)
         if pkt is None: 
             return {'state': 'filtered', 'reply': None}
-        elif pkt.haslayer(TCP) and tcp_layer.flags == 0x14: # 0x14: RST
+        elif pkt.haslayer(TCP) and pkt.getlayer(TCP).flags & 0x14: # 0x14: RST
             return {'state': 'unfiltered', 'reply': reply}
         elif reply.haslayer(ICMP): # ICMP unreachable msg
             return {'state': 'filtered', 'reply': reply}
         else:
             return {'state': 'unknown', 'reply': reply}
-            
+
 
 
         
