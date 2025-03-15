@@ -78,6 +78,15 @@ class TCPOps:
         else:
             return {'state': 'unknown', 'reply': reply}
 
+    
+    @staticmethod
+    def fin_scan(iface:str, dst:str, dport:int, timeout:int=2):
+        # FIN packet is sent to a closed port, the target should respond with a RST packet, 
+        # while an open port typically produces no response. 
+        # This behavior allows the scanner to infer the state of the port.
+        # Although note that some operating systems (such as Windows) may handle FIN packets 
+        # differently, often returning a RST regardless of the port state.
+
     # Incomplete
     @staticmethod      
     def os_scan(iface:str, dst:str, single_timeout:int=2):
@@ -215,6 +224,8 @@ class UDPOps:
 # ICMP  Flood Attack
 
 # FIN Scan $ 
+
+# christmas flood 
 
 
 
