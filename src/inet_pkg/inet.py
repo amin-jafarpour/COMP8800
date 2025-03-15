@@ -12,7 +12,7 @@ NOTE: Only compatiable with Linux and requires `ip` and `iw` Linux commands to w
 """
 
 import subprocess 
-import scapy.all as scap 
+import scapy.all as scap
 
 class Inet:
     """
@@ -291,6 +291,15 @@ class Inet:
             # Append the network's fields as a dictionary to the list
             net_lst.append(fields)
         return net_lst
+
+    @staticmethod 
+    def change_ip():
+        conf.route.add(host="0.0.0.0/0", gw="192.168.1.1", dev="eth0", src=custom_src_ip) 
+
+    @staticmethod
+    def change_mac():
+        scap.conf.iface.mac = "00:11:22:33:44:55" 
+    
 
 
     
