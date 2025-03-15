@@ -2,11 +2,11 @@ from scapy.all import IP, ICMP, sr1, TCP, send, RandShort, traceroute, DNS, DNSQ
 import ipaddress
 from inet import Inet 
 
-# scapy.all.sndrcvflood(
-# scapy.all.sr1flood(
-# scapy.all.srflood(
-# scapy.all.srp1flood(
-# scapy.all.srpflood(
+# scapy.all.sndrcvflood()
+# scapy.all.sr1flood()
+# scapy.all.srflood()
+# scapy.all.srp1flood()
+# scapy.all.srpflood()
 
 
 
@@ -203,6 +203,15 @@ class UDPOps:
         if response.haslayer(UDP):
             return {'state': 'open', 'reply': reply} 
         return {'state': 'unknown', 'reply': reply}
+    
+    @staticmethod
+    def udp_flood(iface:str, dst:str, dport:int, timeout:int=5):
+        pkt = IP(dst=dst) / UDP(dport=dport) / Raw('heey')
+        srflood(pkt, iface='wlp34s0', timeout=timeout, filter='not ip and not arp')
+
+
+
+
 
 
 
