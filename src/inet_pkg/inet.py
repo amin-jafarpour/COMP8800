@@ -30,7 +30,7 @@ class Inet:
     IFACE_MONITOR_MODE:str = 'monitor'
     IFACE_MANAGED_MODE:str = 'managed'
     NETWORK_FIEDS:list = ['BSSID', 'addr1', 'addr2', 'addr3', 'country_string', 'num_channels', 
-                       'dBm_AntSignal', 'rates', 'ChannelFrequency', 'rate', 'info']
+                       'dBm_AntSignal', 'ChannelFrequency', 'rate', 'info'] # rates, 
     
     @staticmethod
     def get_cidr(iface:str):
