@@ -117,7 +117,7 @@ class UDPOps:
     TXT_RD_TYPE:str = 'TXT'
     
     @staticmethod
-    def dns_scan(iface:str, dst:str, dport:int=53, qtype:str=UDPOps.A_RD_TYPE, timeout:int=2):
+    def dns_scan(iface:str, dst:str, dport:int=53, qtype:str=A_RD_TYPE, timeout:int=2):
         # RD (Recursion Desired): Is a flag use to  perform a recursive query, where 
         # DNS server to fully resolve the query instead of referring the client to another DNS server.
         # QD (Query Domain): Refers to the Query Section of a DNS message. It contains the details 
