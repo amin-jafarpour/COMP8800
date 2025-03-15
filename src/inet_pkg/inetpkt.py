@@ -232,11 +232,20 @@ class UDPOps:
 
 # Port scaning: single, range, list of ports. $ 
 
-# Aggressive Scaning: OS detection, service/version detection, script scanning, and traceroute.
+# FIN Scan $ 
 
 # TCP ACK Scan $ 
 
 # SYN Scan $ 
+
+# Traceroute Scan $ 
+
+# DNS scanning $ 
+
+
+
+# Aggressive Scaning: OS detection, service/version detection, script scanning, and traceroute.
+
 
 
 #  Nmap Scripting Engine (NSE) for CVEs and miscongurations? 
@@ -248,9 +257,7 @@ class UDPOps:
 
 # Exploits scanning?
 
-# Traceroute Scan $ 
 
-# DNS scanning $ 
 
 # Decoy Scan?
 
@@ -270,7 +277,7 @@ class UDPOps:
 
 # ICMP  Flood Attack
 
-# FIN Scan $ 
+
 
 # christmas flood 
 
