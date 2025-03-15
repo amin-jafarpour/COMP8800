@@ -7,17 +7,11 @@ from scapy.all import IP, ICMP, sr1, traceroute, srflood
 
 # Aggressive Scaning: OS detection, service/version detection, script scanning, and traceroute.
 # ARP poisoning
-
-# ICMP 	Router Advertisement	Router advertises itself.
-
-
-
-
-
-
-
 #  Nmap Scripting Engine (NSE) for CVEs and miscongurations? 
 #nmap --script vuln <target>
+
+
+
 
 # Open Proxy Servers? 
 # SMB Shares? 
@@ -54,3 +48,7 @@ class ICMPOps:
         pkt = IP(dst=dst) / ICMP()  
         # "not ip and not arp" is BPF filter to discard responses at kernel level.
         srflood(pkt, iface=iface, timeout=timeout, verbose=False, filter='not ip and not arp')
+
+
+
+

@@ -13,6 +13,8 @@ NOTE: Only compatiable with Linux and requires `ip` and `iw` Linux commands to w
 
 import subprocess 
 import scapy.all as scap
+import ipaddress
+import random
 
 class Inet:
     """
@@ -293,13 +295,131 @@ class Inet:
         return net_lst
 
     @staticmethod 
-    def change_ip():
-        conf.route.add(host="0.0.0.0/0", gw="192.168.1.1", dev="eth0", src=custom_src_ip) 
+    def change_ip(iface:str):
+        net_cidr = Inet.get_net_cidr(iface)
+        # Create an IPv4Network object; strict=False allows non-network addresses as input.
+        network = ipaddress.ip_network(net_cidr, strict=False)
+        hosts_gen = network.hosts()
+        # network.broadcast_address
+        addrs = list(map(lambda x: str(x), hosts_gen))
+        rand_addr = random.choice(addrs)
+        return rand_addr
+        #conf.route.add(host="0.0.0.0/0", gw="192.168.1.1", dev="eth0", src=custom_src_ip) 
 
     @staticmethod
     def change_mac():
         scap.conf.iface.mac = "00:11:22:33:44:55" 
     
+
+
+
+
+
+############################################################################################################################################
+
+
+
+
+
+# #!/usr/bin/env python3
+# import os
+# import subprocess
+
+# def run_command(command):
+#     """Utility function to run a shell command."""
+#     try:
+#         subprocess.run(command, shell=True, check=True)
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error executing command: {command}")
+#         raise e
+
+# def check_root():
+#     """Ensure the script is run as root."""
+#     if os.geteuid() != 0:
+#         print("This script must be run as root!")
+#         exit(1)
+
+# def install_packages():
+#     """Install necessary packages: hostapd and dnsmasq."""
+#     run_command("apt-get update")
+#     run_command("apt-get install -y hostapd dnsmasq")
+
+# def configure_hostapd():
+#     """Write the hostapd configuration file."""
+#     hostapd_conf = """
+# interface=wlan0
+# driver=nl80211
+# ssid=MyAccessPoint
+# hw_mode=g
+# channel=6
+# wmm_enabled=0
+# macaddr_acl=0
+# auth_algs=1
+# ignore_broadcast_ssid=0
+# wpa=2
+# wpa_passphrase=MyPassphrase
+# wpa_key_mgmt=WPA-PSK
+# wpa_pairwise=TKIP
+# rsn_pairwise=CCMP
+#     """
+#     with open("/etc/hostapd/hostapd.conf", "w") as file:
+#         file.write(hostapd_conf.strip())
+
+# def configure_dnsmasq():
+#     """Configure dnsmasq for DHCP on the wlan0 interface."""
+#     # Backup original dnsmasq configuration if it exists.
+#     if os.path.exists("/etc/dnsmasq.conf"):
+#         run_command("cp /etc/dnsmasq.conf /etc/dnsmasq.conf.orig")
+#     dnsmasq_conf = """
+# interface=wlan0
+# dhcp-range=192.168.50.10,192.168.50.50,255.255.255.0,24h
+#     """
+#     with open("/etc/dnsmasq.conf", "w") as file:
+#         file.write(dnsmasq_conf.strip())
+
+# def configure_network_interface():
+#     """Assign a static IP to the wlan0 interface."""
+#     run_command("ifconfig wlan0 192.168.50.1 netmask 255.255.255.0 up")
+
+# def enable_ip_forwarding():
+#     """Enable IP forwarding and set up NAT using iptables."""
+#     # Append IP forwarding configuration to sysctl.conf.
+#     with open("/etc/sysctl.conf", "a") as file:
+#         file.write("\nnet.ipv4.ip_forward=1\n")
+#     run_command("sysctl -p")
+    
+#     # Set up NAT rules. Replace 'eth0' with your external interface if different.
+#     run_command("iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
+#     run_command("iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT")
+#     run_command("iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT")
+    
+#     # Save iptables rules so they persist after reboot.
+#     run_command("sh -c \"iptables-save > /etc/iptables.ipv4.nat\"")
+
+# def update_hostapd_defaults():
+#     """Configure hostapd to use the new configuration file."""
+#     run_command("sed -i 's|#DAEMON_CONF=\"\"|DAEMON_CONF=\"/etc/hostapd/hostapd.conf\"|' /etc/default/hostapd")
+
+# def restart_services():
+#     """Restart the hostapd and dnsmasq services to apply changes."""
+#     run_command("systemctl restart hostapd")
+#     run_command("systemctl restart dnsmasq")
+
+# def main():
+#     check_root()
+#     install_packages()
+#     configure_hostapd()
+#     configure_dnsmasq()
+#     configure_network_interface()
+#     enable_ip_forwarding()
+#     update_hostapd_defaults()
+#     restart_services()
+#     print("Network Access Point setup complete. The wireless network 'MyAccessPoint' should now be active.")
+
+# if __name__ == "__main__":
+#     main()
+
+
 
 
     
