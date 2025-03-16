@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Network Radar Display</title>
+  <title>{{target_type}} Radar Display</title>
   <style>
     /* Container for the whole layout */
     #container {
@@ -58,8 +58,8 @@
   <div id="container">
     <!-- Left Side: Info Panel -->
     <div id="infoPanel">
-      <div id="infoTitle">Target Info</div>
-      <div id="targetDetails">Click a target to view details...</div>
+      <div id="infoTitle">{{target_type}} Info</div>
+      <div id="targetDetails">Click a {{target_type}} to view details...</div>
     </div>
 
     <!-- Right Side: Radar Display -->
@@ -76,6 +76,15 @@
      * "distance" determines how close to the center (small distance)
      * or outer ring (large distance) the target will be drawn.
      ************************************************************/
+    /*const targetsData = [
+      { name: "Alpha", distance: 10, speed: 5, type: "Scout" },
+      { name: "Bravo", distance: 25, speed: 2, type: "Bomber" },
+      { name: "Charlie", distance: 70, speed: 3, type: "Fighter" },
+      { name: "Delta", distance: 95, speed: 4, type: "Interceptor" },
+      { name: "Echo", distance: 50, speed: 1, type: "Transport" },
+      { name: "Foxtrot", distance: 30, speed: 7, type: "Recon" }
+    ];*/ 
+
     const targetsData = [
       { name: "Alpha", distance: 10, speed: 5, type: "Scout" },
       { name: "Bravo", distance: 25, speed: 2, type: "Bomber" },
