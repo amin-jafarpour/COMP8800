@@ -1,11 +1,13 @@
 # Special thanks to https://github.com/pybluez/pybluez/tree/master/examples/
 import bluetooth
 import time 
-
+import subprocess 
 
 class BT:
     @staticmethod
     def device_scan(iface:str='hci0', duration:int=5):
+        result = subprocess.run(['sudo', 'hciconfig', 'hci0', 'up'], capture_output=True, text=True)
+        print(result.stdout, result.stderr, result.returncode) 
         device_id = int(hci0[-1])
         # discover_devices(duration, lookup_names, lookup_class):
         #   lookup_names: Find name of each discovered device. 
