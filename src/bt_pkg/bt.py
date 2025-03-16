@@ -8,7 +8,7 @@ class BT:
     def device_scan(iface:str='hci0', duration:int=5):
         result = subprocess.run(['sudo', 'hciconfig', 'hci0', 'up'], capture_output=True, text=True)
         print(result.stdout, result.stderr, result.returncode) 
-        device_id = int(hci0[-1])
+        device_id = int(iface[-1])
         # discover_devices(duration, lookup_names, lookup_class):
         #   lookup_names: Find name of each discovered device. 
         #   lookup_class: Find class of each discovered device. 
