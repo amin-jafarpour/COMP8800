@@ -39,12 +39,16 @@ def get_inet_net_scan():
     # BUG: Bytes decoding has issues. Fix it!
     # v.decode(encoding='utf-32-be', errors='ignore')
     targets = [{k: (f'{v}' if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
-    distance = abs(targets['dbm_antsignal'])
-    name = targets['info']
-    name = name[:2]
-    name = name[:-1]
-    targets['name'] = name 
-    targets['distance'] = distance
+    def clean(target):
+        distance = abs(target['dbm_antsignal'])
+        name = target['info']
+        name = name[:2]
+        name = name[:-1]
+        target['name'] = name 
+        target['distance'] = distance
+    
+    targets_fields = list(map(clean, targets))
+
     return render_template('radar.html', target_type='Network', targets_fields=targets)
 
 
