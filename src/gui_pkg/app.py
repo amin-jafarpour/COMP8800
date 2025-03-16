@@ -8,6 +8,8 @@ sys.path.append(str(pathlib.Path.cwd().parent))
 from flask import Flask, render_template, request, jsonify
 from bt_pkg.bt import BT
 from inet_pkg.inet import Inet 
+import random
+
 
 
 
@@ -27,8 +29,23 @@ def get_bluetooth_scan():
     # http://127.0.0.1:5000/api/bluetooth/scan?iface=<hci#>&duration=<seconds>
     iface = request.args.get('iface', default=1, type=str)
     duration = request.args.get('duration', default=1, type=int)
-    return BT.device_scan(iface, duration)
+    targets =  BT.device_scan(iface, duration)
+    def clean(target):
+        target['distance'] = random.randint(50, 89)
+        cod_names = target.get('cod_names', {})
+        del target['cod_names']
+        major_device_class = cod_names.get('major_device_class', [])
+        major_service_classes =  cod_names.get('major_service_classes', []) 
+        minor_device_class = cod_names.get('minor_device_class', []) 
+        target['major_device_class'] = major_device_class
+        target['major_service_classes'] = major_service_classes
+        target['minor_device_class'] = minor_device_class
+        return target
+    targets_fields = list(map(clean, targets))
+    print(targets_fields)
+    return render_template('radar.html', target_type='Bluetooth', targets_fields=targets_fields)
 
+    
 @app.route('/api/inet/net/scan', methods=['GET'])
 def get_inet_net_scan():
     # http://127.0.0.1:5000/api/inet/net/scan?iface=<network-iface>&net_count=<count>&timeout=<seconds>
@@ -49,11 +66,10 @@ def get_inet_net_scan():
             name = name[2:]
             name = name[:-1]
         target['name'] = name 
-       
-    
+        return target
     targets_fields = list(map(clean, targets))
-
-    return render_template('radar.html', target_type='Network', targets_fields=targets)
+    print(targets_fields)
+    return render_template('radar.html', target_type='Network', targets_fields=targets_fields)
 
 
 
