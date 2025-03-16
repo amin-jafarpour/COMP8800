@@ -42,7 +42,7 @@ def get_inet_net_scan():
     def clean(target):
         distance = abs(target['dbm_antsignal'])
         name = target['info']
-        name = name[:2]
+        name = name[2:]
         name = name[:-1]
         target['name'] = name 
         target['distance'] = distance
