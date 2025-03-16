@@ -40,9 +40,9 @@ def get_inet_net_scan():
     # v.decode(encoding='utf-32-be', errors='ignore')
     targets = [{k: (f'{v}' if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
     def clean(target):
-        distance = abs(target['dbm_antsignal'])
+        distance = abs(target.get('dbm_antsignal', -50))
         target['distance'] = distance
-        name = target['info']
+        name = target.get('info', 'b\'\'')
         if name == 'b\'\'':
             name = 'Hidden'
         else:
