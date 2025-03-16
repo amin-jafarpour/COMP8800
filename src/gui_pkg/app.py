@@ -41,11 +41,15 @@ def get_inet_net_scan():
     targets = [{k: (f'{v}' if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
     def clean(target):
         distance = abs(target['dbm_antsignal'])
-        name = target['info']
-        name = name[2:]
-        name = name[:-1]
-        target['name'] = name 
         target['distance'] = distance
+        name = target['info']
+        if name == 'b\'\'':
+            name = 'Hidden'
+        else:
+            name = name[2:]
+            name = name[:-1]
+        target['name'] = name 
+       
     
     targets_fields = list(map(clean, targets))
 
