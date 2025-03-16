@@ -14,6 +14,8 @@ from inet_pkg.inet import Inet
 
 
 
+
+
 # render_template: Used to serve the markdown files. 
 # request: Allows access to client request packet parameters. 
 # jsonify: Allows to define an API.
@@ -36,7 +38,14 @@ def get_inet_net_scan():
     net_lst = Inet.scan_networks(iface, net_count, timeout)
     # BUG: Bytes decoding has issues. Fix it!
     # v.decode(encoding='utf-32-be', errors='ignore')
-    return [{k: (f'{v}' if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
+    targets = [{k: (f'{v}' if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
+    distance = abs(targets['dbm_antsignal'])
+    name = targets['info']
+    name = name[:2]
+    name = name[:-1]
+    targets['name'] = name 
+    targets['distance'] = distance
+    return render_template('radar.html', target_type='Network', targets_fields=targets)
 
 
 

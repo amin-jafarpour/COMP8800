@@ -85,14 +85,9 @@
       { name: "Foxtrot", distance: 30, speed: 7, type: "Recon" }
     ];*/ 
 
-    const targetsData = [
-      { name: "Alpha", distance: 10, speed: 5, type: "Scout" },
-      { name: "Bravo", distance: 25, speed: 2, type: "Bomber" },
-      { name: "Charlie", distance: 70, speed: 3, type: "Fighter" },
-      { name: "Delta", distance: 95, speed: 4, type: "Interceptor" },
-      { name: "Echo", distance: 50, speed: 1, type: "Transport" },
-      { name: "Foxtrot", distance: 30, speed: 7, type: "Recon" }
-    ];
+
+    const targetsData = {{ targets_fields | tojson }};
+
 
     /************************************************************
      * Configuration
