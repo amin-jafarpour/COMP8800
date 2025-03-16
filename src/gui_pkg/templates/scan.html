@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic REST API Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    .left-panel {
+      flex: 2;
+      padding: 20px;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+    }
+    .right-panel {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+    }
+    .control-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    select, input, button {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <h2>API Results</h2>
+      <div id="result">
+        <!-- REST API responses will be displayed here -->
+      </div>
+    </div>
+    <div class="right-panel">
+      <div class="control-group">
+        <label for="interfaceSelect">Interface</label>
+        <select id="interfaceSelect">
+          <option value="">Select Interface</option>
+          <option value="eth0">Ethernet (eth0)</option>
+          <option value="wlan0">Wireless (wlan0)</option>
+          <option value="lo">Loopback (lo)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="protocolSelect">Protocol</label>
+        <select id="protocolSelect">
+          <option value="">Select Protocol</option>
+          <option value="tcp">TCP</option>
+          <option value="udp">UDP</option>
+          <option value="icmp">ICMP</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="scanSelect">Scan</label>
+        <select id="scanSelect">
+          <option value="">Select Scan</option>
+          <!-- Options will be populated based on protocol selection -->
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="floodSelect">Flood</label>
+        <select id="floodSelect">
+          <option value="">Select Flood</option>
+          <!-- Options will be populated based on protocol selection -->
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="destinationInput">Destination</label>
+        <input type="text" id="destinationInput" placeholder="Enter destination">
+      </div>
+      <div class="control-group">
+        <label for="timeoutInput">Time Out Seconds</label>
+        <input type="number" id="timeoutInput" min="1" max="50" placeholder="Enter timeout in seconds">
+      </div>
+      <button id="applyBtn">Apply</button>
+    </div>
+  </div>
+  <script>
+    // Dummy data for dependent drop-down menus
+    const data = {
+      tcp: {
+        scan: [
+          { value: 'syn', text: 'SYN Scan' },
+          { value: 'connect', text: 'Connect Scan' },
+          { value: 'null', text: 'NULL Scan' }
+        ],
+        flood: [
+          { value: 'tcpFloodA', text: 'TCP Flood A' },
+          { value: 'tcpFloodB', text: 'TCP Flood B' }
+        ]
+      },
+      udp: {
+        scan: [
+          { value: 'udpScan', text: 'UDP Scan' },
+          { value: 'syn', text: 'SYN Scan' }
+        ],
+        flood: [
+          { value: 'udpFloodA', text: 'UDP Flood A' },
+          { value: 'udpFloodB', text: 'UDP Flood B' }
+        ]
+      },
+      icmp: {
+        scan: [
+          { value: 'ping', text: 'Ping Scan' },
+          { value: 'traceroute', text: 'Traceroute' }
+        ],
+        flood: [
+          { value: 'icmpFloodA', text: 'ICMP Flood A' },
+          { value: 'icmpFloodB', text: 'ICMP Flood B' }
+        ]
+      }
+    };
+
+    // Get references to DOM elements
+    const interfaceSelect = document.getElementById('interfaceSelect');
+    const protocolSelect = document.getElementById('protocolSelect');
+    const scanSelect = document.getElementById('scanSelect');
+    const floodSelect = document.getElementById('floodSelect');
+    const destinationInput = document.getElementById('destinationInput');
+    const timeoutInput = document.getElementById('timeoutInput');
+    const resultDiv = document.getElementById('result');
+    const applyBtn = document.getElementById('applyBtn');
+
+    // Update scan and flood options based on selected protocol
+    protocolSelect.addEventListener('change', function() {
+      const selectedProtocol = protocolSelect.value;
+      // Clear current options for scan and flood drop-downs
+      scanSelect.innerHTML = '<option value="">Select Scan</option>';
+      floodSelect.innerHTML = '<option value="">Select Flood</option>';
+      if (data[selectedProtocol]) {
+        // Populate scan drop-down
+        data[selectedProtocol].scan.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item.value;
+          option.text = item.text;
+          scanSelect.appendChild(option);
+        });
+        // Populate flood drop-down
+        data[selectedProtocol].flood.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item.value;
+          option.text = item.text;
+          floodSelect.appendChild(option);
+        });
+      }
+    });
+
+    // Handle Apply button click to simulate REST API call
+    applyBtn.addEventListener('click', function() {
+      const interfaceVal = interfaceSelect.value || 'Not selected';
+      const protocol = protocolSelect.value || 'Not selected';
+      const scan = scanSelect.value || 'Not selected';
+      const flood = floodSelect.value || 'Not selected';
+      const destination = destinationInput.value || 'Not specified';
+      const timeout = timeoutInput.value || 'Not specified';
+
+      // Dummy REST API call simulation
+      resultDiv.innerHTML = '<p><strong>Performing API call with the following parameters:</strong></p>' +
+                            '<ul>' +
+                            '<li>Interface: ' + interfaceVal + '</li>' +
+                            '<li>Protocol: ' + protocol + '</li>' +
+                            '<li>Scan: ' + scan + '</li>' +
+                            '<li>Flood: ' + flood + '</li>' +
+                            '<li>Destination: ' + destination + '</li>' +
+                            '<li>Time Out Seconds: ' + timeout + '</li>' +
+                            '</ul>' +
+                            '<p><em>Result:</em> Dummy API response displayed here.</p>';
+
+      // In a real scenario, you could use fetch() to call your REST API endpoint.
+      // Example:
+      // fetch('https://api.example.com/scan', {
+      //   method: 'POST',
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ interface: interfaceVal, protocol, scan, flood, destination, timeout })
+      // })
+      // .then(response => response.json())
+      // .then(data => {
+      //   resultDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+      // })
+      // .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>

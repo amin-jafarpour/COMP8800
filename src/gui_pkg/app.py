@@ -30,7 +30,7 @@ def get_bluetooth_scan():
     iface = request.args.get('iface', default=1, type=str)
     duration = request.args.get('duration', default=1, type=int)
     targets =  BT.device_scan(iface, duration)
-    def clean(target):
+    def parse(target):
         target['distance'] = random.randint(50, 89)
         cod_names = target.get('cod_names', {})
         del target['cod_names']
@@ -41,7 +41,7 @@ def get_bluetooth_scan():
         target['major_service_classes'] = major_service_classes
         target['minor_device_class'] = minor_device_class
         return target
-    targets_fields = list(map(clean, targets))
+    targets_fields = list(map(parse, targets))
     print(targets_fields)
     return render_template('radar.html', target_type='Bluetooth', targets_fields=targets_fields)
 
@@ -56,7 +56,7 @@ def get_inet_net_scan():
     # BUG: Bytes decoding has issues. Fix it!
     # v.decode(encoding='utf-32-be', errors='ignore')
     targets = [{k: (f'{v}' if isinstance(v, bytes) else v) for k, v in d.items()} for d in net_lst]
-    def clean(target):
+    def parse(target):
         distance = abs(target.get('dbm_antsignal', -50))
         target['distance'] = distance
         name = target.get('info', 'b\'\'')
@@ -67,7 +67,7 @@ def get_inet_net_scan():
             name = name[:-1]
         target['name'] = name 
         return target
-    targets_fields = list(map(clean, targets))
+    targets_fields = list(map(parse, targets))
     print(targets_fields)
     return render_template('radar.html', target_type='Network', targets_fields=targets_fields)
 
